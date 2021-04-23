@@ -1,0 +1,69 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3">Psychotropic Numbers</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="psychotropicForm" (ngSubmit)="submitForm()">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="facility">Select Facility</label>
+                    <select class="form-control" formControlName="facility" id="facility" (change)="updateFacility($event.target.value)">
+                        <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                            {{facility.facilityName}}
+                        </option>
+                    </select>
+                    <div *ngIf="formSubmitted && f.facility.errors?.required" style="color: red;">Facility is required</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="facilityDate">Month & Year</label>
+                    <input type="month" formControlName="facilityDate" [ngClass]="{ 'is-invalid': formSubmitted && f.facilityDate.errors }">
+                    <div *ngIf="formSubmitted && f.facilityDate.errors" class="invalid-feedback">
+                        <div *ngIf="f.facilityDate.errors.required">Date is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="bedsInFacility" [ngClass]="{ 'is-invalid': formSubmitted && f.bedsInFacility.errors }" placeholder="Beds In Facility">
+                <div *ngIf="formSubmitted && f.bedsInFacility.errors" class="invalid-feedback">
+                    <div *ngIf="f.bedsInFacility.errors.required">Beds In Facility is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="censusPatients" [ngClass]="{ 'is-invalid': formSubmitted && f.censusPatients.errors }" placeholder="Census Of Patients">
+                <div *ngIf="formSubmitted && f.censusPatients.errors" class="invalid-feedback">
+                    <div *ngIf="f.censusPatients.errors.required">Census Of Patient is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="patiensOnAntipsychotics" [ngClass]="{ 'is-invalid': formSubmitted && f.patiensOnAntipsychotics.errors }" placeholder="Patients On Antipsychotics">
+                <div *ngIf="formSubmitted && f.patiensOnAntipsychotics.errors" class="invalid-feedback">
+                    <div *ngIf="f.patiensOnAntipsychotics.errors.required">Patients On AntiPsychotics is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="patiensOnAntiAnxiety" [ngClass]="{ 'is-invalid': formSubmitted && f.patiensOnAntiAnxiety.errors }" placeholder="Patients On AntiAnxiety">
+                <div *ngIf="formSubmitted && f.patiensOnAntiAnxiety.errors" class="invalid-feedback">
+                    <div *ngIf="f.patiensOnAntiAnxiety.errors.required">Patients On Anti Anxiety is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="patientsOnAntiDepressants" [ngClass]="{ 'is-invalid': formSubmitted && f.patientsOnAntiDepressants.errors }" placeholder="Patients On Anti Depressants">
+                <div *ngIf="formSubmitted && f.patientsOnAntiDepressants.errors" class="invalid-feedback">
+                    <div *ngIf="f.patientsOnAntiDepressants.errors.required">Patients On Anti Depressants is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="patientsOnSedativesHypnotics" [ngClass]="{ 'is-invalid': formSubmitted && f.patientsOnSedativesHypnotics.errors }" placeholder="Patients On Sedatives And Hypnotics">
+                <div *ngIf="formSubmitted && f.patientsOnSedativesHypnotics.errors" class="invalid-feedback">
+                    <div *ngIf="f.patientsOnSedativesHypnotics.errors.required">Patients On Sedatives And Hypnotics is required</div>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" class="btn btn-custom add">Save</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

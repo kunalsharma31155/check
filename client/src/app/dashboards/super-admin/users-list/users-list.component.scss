@@ -1,0 +1,31 @@
+@import "../../../app.component.scss";
+
+tr:nth-child(even) {background-color: rgba(135, 196, 66, 0.5);}
+tr td{
+  padding: 8px;
+}
+.search{
+    border: 1px solid $main-font-color;
+}
+.link{
+    font-weight: 700;
+    color: grey;
+}
+.btn-info{
+    background-color: $main-font-color;
+    border:none;
+}
+.btn-info:focus{
+    border: none;
+}
+.fa{
+  cursor: pointer;
+}
+.password{
+  background-color: $main-font-color;
+  color: $main-bg-color;
+}
+.changePasswordhead{
+  color: $main-font-color;
+  font-weight: 600;
+}

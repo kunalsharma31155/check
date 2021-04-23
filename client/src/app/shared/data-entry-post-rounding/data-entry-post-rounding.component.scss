@@ -1,0 +1,15 @@
+@import "../../app.component.scss";
+label{
+    font-weight :600;
+}
+.card-title{
+    font-weight: 600;
+    color: $main-font-color;
+}
+.add{
+    background-color: $main-font-color;
+    color : $main-bg-color;
+}
+.invalid-feedback{
+    display: inline;
+}

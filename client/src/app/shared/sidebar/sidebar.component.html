@@ -1,0 +1,46 @@
+<!-- topbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top topbar" id="sticky" >
+
+    <img src="../../../assets/img/logo.png" alt="Dr Desh" class="logo-img"><div class="logoName">Balanced Wellbeing</div>
+    <button type="button" class="navbar-toggle ml-3 togglebutton" (click)="toggleSideNav()">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="menu-items ml-auto" >
+      <div class="navbar-nav">
+            <li><i class="fa fa-bell-o fa-2x rightsideicon mr-3" aria-hidden="true"></i></li>
+            <li class="nav-item rightsideicon">
+              <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown" display="dynamic" placement="bottom-left">
+                  <i class="fa fa-user-circle myprofile fa-2x" aria-hidden="true"
+                  id="dropdownManual" (mouseover)="myDrop.open()"
+                  (click)="myDrop.open"></i>
+                  <div ngbDropdownMenu aria-labelledby="dropdownManual" class="mr-2 dropdown-menu"
+                    (mouseover)="myDrop.open()"
+                    (mouseleave)="myDrop.close()">
+                    <button ngbDropdownItem><i class="fa fa-user" aria-hidden="true"></i>&nbsp; {{loggedUserName}}</button>
+                    <button *ngIf="loggedUserRole == 'super-admin'" ngbDropdownItem (click)="openSettings()"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp; Settings</button>
+                    <button ngbDropdownItem (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Log Out</button>
+                  </div>
+              </div>
+            </li>
+    </div>
+    </div>
+  </nav>
+  <div>
+  <nav id="sidebar" class="navbar-dark fixed-left" [ngClass]="{'hidden': hideSideNav}" style="box-shadow: 10px 1px 10px 1px rgba(0,0,0,0.1)">
+      <ul class="navbar-nav mt-4">
+          <li class="role-image mt-3 mb-5">
+            <i class="main-user-icon fa fa-user-circle fa-3x" aria-hidden="true"></i>
+            <div class="userrole mt-2">{{loggedUserName}}</div>
+            <div class="userrole">{{loggedUserRole}}</div><br>
+            <div class="userrole-hidden mt-2" id="u-hidden">{{loggedUserIntials}}</div>
+          </li>
+          <ul class="nav-item" *ngFor="let item of navbarList">
+          <span class="customIcon mt-2"><i class={{item.logo}} aria-hidden="true"></i></span>
+          <li class="nav-link sidebar-item-text ml-2" [routerLink]="['/dashboard',item.link]">{{item.name}}</li>
+          </ul>
+      </ul>
+  </nav>
+  <div id="content" [ngClass]="{'hidden': hideSideNav}">
+      <ng-content></ng-content>
+  </div>
+  </div>

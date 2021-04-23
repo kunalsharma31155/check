@@ -1,0 +1,83 @@
+@import "../../../app.component.scss";
+
+.heading{
+  color: $main-font-color;
+  font-weight: 700;
+}
+.boxa{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 50px;
+  .head{
+    border-bottom: 1px solid rgba(211,211,211,0.5);
+    padding: 10px;
+    label{
+      font-weight: 700;
+     i{
+      color: $main-font-color;
+    }
+    }
+  }
+  .big-text{
+    color: darkgray;
+    font-weight: 700;
+  }
+  .small-text{
+    color: lightgray;
+    font-weight: 400;
+  }
+}
+
+.boxb1{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(45, 199, 236);
+  color: white;
+  text-align: center;
+  padding: 59px;
+  cursor: pointer;
+  h3{
+    font-weight: 700;
+  }
+}
+.boxb2{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(59, 78, 117);
+  color: white;
+  text-align: center;
+  padding: 59px;
+  cursor: pointer;
+  h3{
+    font-weight: 700;
+  }
+}
+.boxb3{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(28, 171, 116);
+  color: white;
+  text-align: center;
+  padding: 59px;
+  cursor: pointer;
+  h3{
+    font-weight: 700;
+  }
+}
+.boxb4{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(254, 67, 98);
+  color: white;
+  text-align: center;
+  padding: 59px;
+  cursor: pointer;
+  h3{
+    font-weight: 700;
+  }
+}
+.progress-bar{
+  max-width: 100%;
+  background-color: rgba($color: lightgrey, $alpha: 0.3);
+  border-radius: 10px;
+}
+
+.col-md-9 label{
+  font-weight: 700;
+  color: darkgray;
+}

@@ -1,0 +1,131 @@
+<div class="card" *ngIf="showCard1 == true">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-md-1">
+                <img src="../../../assets/img/logo.png" alt="Dr Desh" class="logo-img">
+            </div>
+            <div class="col-md-5 mt-2">
+                <h3 class="ml-5 card-title">Facility Psychotropic Number Report</h3>
+
+                <div class="ml-5" style="font-weight: 700;">From - {{dateFrom |date: 'MM-yyyy'}} &nbsp; &nbsp; To - {{dateTo |date: 'MM-yyyy'}}</div>
+            </div>
+            <div class="col-md-2 offset-md-3 mt-2">
+                <button class="btn btn-custom" (click)="exportExcel('Facility_Psychotropic_Number_Report.xlsx', 'Facility Psychotropic Number Report')">Download Excel</button>
+                <button class="btn btn-custom mt-1" (click)="createPdf()">Download PDF</button>
+            </div>
+        </div>
+    </div>
+<table class="table table-bordered mt-1" id="excel-table">
+    <thead>
+        <tr>
+            <th>Month</th>
+            <th>Beds In Facility</th>
+            <th>Census Patients</th>
+            <th>Patiens On Antipsychotics</th>
+            <th>Patiens On AntiAnxiety</th>
+            <th>Patients On Anti Depressants</th>
+            <th>Patients On Sedatives And Hypnotics</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let d of reportData | filter:searchTerm | paginate : { itemsPerPage:25, currentPage:pageNo}">
+            <td *ngIf="d.bedsInFacility == undefined">{{d}}</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.facilityDate}}</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.bedsInFacility}}</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.censusPatients}} ( {{(d.censusPatients/d.bedsInFacility*100) | number : '1.0-0'}}%)</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.patiensOnAntipsychotics}} ( {{d.patiensOnAntipsychotics/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.patiensOnAntiAnxiety}} ( {{d.patiensOnAntiAnxiety/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.patientsOnAntiDepressants}} ( {{d.patientsOnAntiDepressants/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+            <td *ngIf="d.bedsInFacility != undefined">{{d.patientsOnSedativesHypnotics}} ( {{d.patientsOnSedativesHypnotics/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+        </tr>
+    </tbody>
+    <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+</table>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let data of finalGraph">
+      <div class="graphBox mt-2">
+        <div class="graphHeading">Facility - {{data.facility | uppercase}}</div>
+        <div class="chart-wrapper">
+          <canvas baseChart [datasets]="data.d" [labels]="barChartLabels" [options]="barChartOptions"
+            [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div class="card" *ngIf="showCard2 == true">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+  <div class="container">
+      <div class="row mt-1">
+          <div class="col-md-1">
+              <img src="../../../assets/img/logo.png" alt="Dr Desh" class="logo-img">
+          </div>
+          <div class="col-md-7 mt-2">
+              <h3 class="ml-5 card-title">Facility Psychotropic Number Report</h3>
+              <div class="ml-5" style="font-weight: 700;">From - {{dateFrom |date: 'MM-yyyy'}} &nbsp; &nbsp; To - {{dateTo |date: 'MM-yyyy'}}</div>
+          </div>
+          <div class="col-md-1 offset-md-3 mt-2">
+            <button class="btn btn-custom" (click)="exportExcel('Facility_Psychotropic_Number_Report.xlsx', 'Facility Psychotropic Number Report')">Download Excel</button>
+            <button class="btn btn-custom mt-1" (click)="createPdf()">Download PDF</button>
+          </div>
+      </div>
+  </div>
+  <div id="excel-table">
+<div *ngFor="let data of reportData">
+  <label class="mt-2 mb-2" style="font-weight:700;">Faciltiy - {{data[0].facilityName}}</label>
+<table class="table table-bordered mt-1" >
+  <thead>
+      <tr>
+          <th>Month</th>
+          <th>Beds In Facility</th>
+          <th>Census Patients</th>
+          <th>Patiens On Antipsychotics</th>
+          <th>Patiens On AntiAnxiety</th>
+          <th>Patients On Anti Depressants</th>
+          <th>Patients On Sedatives And Hypnotics</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let d of data | filter:searchTerm | paginate : { itemsPerPage:25, currentPage:pageNo}">
+          <!-- <td *ngIf="d.bedsInFacility == undefined">{{d}}</td> -->
+          <td *ngIf="d.bedsInFacility != undefined">{{d.facilityDate}}</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.bedsInFacility}}</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.censusPatients}} ( {{(d.censusPatients/d.bedsInFacility*100) | number : '1.0-0'}}%)</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.patiensOnAntipsychotics}} ( {{d.patiensOnAntipsychotics/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.patiensOnAntiAnxiety}} ( {{d.patiensOnAntiAnxiety/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.patientsOnAntiDepressants}} ( {{d.patientsOnAntiDepressants/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+          <td *ngIf="d.bedsInFacility != undefined">{{d.patientsOnSedativesHypnotics}} ( {{d.patientsOnSedativesHypnotics/d.bedsInFacility*100 | number : '1.0-0'}}%)</td>
+      </tr>
+  </tbody>
+  <!-- <pagination-controls (pageChange)="pageNo = $event"></pagination-controls> -->
+</table>
+</div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let data of finalGraph">
+      <div class="graphBox mt-2">
+        <div class="graphHeading">Facility - {{data.facility | uppercase}}</div>
+        <div class="chart-wrapper">
+          <canvas baseChart [datasets]="data.d" [labels]="barChartLabels" [options]="barChartOptions"
+            [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

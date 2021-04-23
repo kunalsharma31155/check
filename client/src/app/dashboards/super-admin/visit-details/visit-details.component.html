@@ -1,0 +1,49 @@
+<app-super-admin>
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <div class="col-md-10">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="mt-2 search">
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+  </div>
+  <table class="table table-bordered mt-2">
+    <thead>
+      <tr>
+        <th>Date Of Service</th>
+        <th>Facility</th>
+        <th>Provider</th>
+        <th>CPT Code</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of visits | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:pageNo}">
+        <td>{{v.dateOfService | date:'MM-dd-yyyy'}}</td>
+        <td>{{v.patientFacility}}</td>
+        <td>{{v.patientProvider}}</td>
+        <td>{{v.cptCode}}</td>
+        <td><i class="fa fa-pencil-square-o" (click)="updatePatient(v)" aria-hidden="true"></i></td>
+        <td style="cursor: pointer;"><i class="fa fa-trash-o" (click)="softDeleteVisit(content,v)" aria-hidden="true"></i></td>
+      </tr>
+    </tbody>
+    <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+  </table>
+</app-super-admin>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Please Confirm</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure to delete this Visit Record?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">Cancel</button>
+    <button type="button" class="btn btn-outline-dark" (click)="c('yes')">Yes</button>
+  </div>
+</ng-template>

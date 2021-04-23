@@ -1,0 +1,45 @@
+<div class="fullpage">
+<section class="container-fluid">
+    <section class="row justify-content-center">
+        <section class="col-12 col-sm-6 col-md-4">
+            <form class="form-container" [formGroup]="loginForm" (ngSubmit)="loginUser()">
+            <div class="form-group">
+                <h4 class="text-center font-weight-bold mb-3"> LOGIN </h4>
+                <label for="InputEmail1">Email or Username</label>
+                <input type="text" class="form-control" formControlName="email"
+                    [ngClass]="{ 'is-invalid': formSubmitted && f.email.errors }" aria-describeby="emailHelp" placeholder="Email or Username">
+                <div *ngIf="formSubmitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email or User Id is required</div>
+                    <!-- <div *ngIf="f.email.errors.pattern">Enter Valid Email</div> -->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="InputPassword1">Password</label>
+                <div class="row">
+                    <div class="col-md-11">
+                        <input [type]="showPassword ? 'text' : 'password'"
+                        class="form-control password-type" formControlName="password"
+                        [ngClass]="{ 'is-invalid': formSubmitted && f.password.errors }"
+                        placeholder="Password" style="border-right :none;">
+                            </div>
+                    <div class="col-md-1">
+                        <button type="button" class="password-type bg-transparent"
+                        (click)="togglePassword()" style="float: right; padding : 6px 12px; border: 1px solid #ced4da;
+                        border-left: none; border-radius: 0.25rem; outline:none;">
+                            <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="formSubmitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            <div class="form-footer text-center mt-4 background">
+                <p>To reset password, Please contact the system admin</p>
+            </div>
+            </form>
+        </section>
+    </section>
+</section>
+</div>

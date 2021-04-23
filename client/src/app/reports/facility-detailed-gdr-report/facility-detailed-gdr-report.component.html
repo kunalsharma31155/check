@@ -1,0 +1,58 @@
+<div class="card content" #content>
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+      style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+  <div class="container">
+    <div class="row mt-1">
+      <div class="col-md-1">
+        <img src="../../../assets/img/logo.png" alt="Dr Desh" class="logo-img">
+      </div>
+      <div class="col-md-5 mt-2">
+        <h3 class="ml-5 card-title">Facility Detailed GDR Report</h3>
+        <div class="ml-5" style="font-weight: 700;">From - {{dateFrom | date: 'MM-dd-yyyy'}} &nbsp; &nbsp; To - {{dateTo
+          | date: 'MM-dd-yyyy'}}</div>
+      </div>
+      <div class="col-md-2 offset-md-3 mt-2">
+        <!-- <button class="btn btn-custom"
+          (click)="exportExcel('Facility_Psychotropic_Number_Report.xlsx', 'Facility Psychotropic Number Report')">Download
+          Excel</button> -->
+        <button class="btn btn-custom mt-1" (click)="createPdf()">Download PDF</button>
+      </div>
+    </div>
+  </div>
+  <!-- <button (click)="makePDF()">PDF</button> -->
+  <table class="table table-bordered mt-1" id="excel-table">
+    <thead>
+      <tr>
+        <th>Facility</th>
+        <th>Failed GDR</th>
+        <th>Did GDR</th>
+        <th>Patient is at Baseline</th>
+        <th>Patient can tolerate GDR</th>
+        <th>Patient is now total care assist</th>
+        <th>Consider GDR</th>
+        <th>Patient is at Baseline</th>
+        <th>Patient is on no psych meds</th>
+        <th>Decreased Meds.</th>
+        <th>Stop Meds.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of reportData">
+        <td>{{data.facility}}</td>
+        <td>{{data.failedGdr}}</td>
+        <td>{{data.didGdr}}</td>
+        <td>{{data.patientIsAtBaselineDidGDR}}</td>
+        <td>{{data.patientCanTolerateGdr}}</td>
+        <td>{{data.patientIsNowTotalCareAssist}}</td>
+        <td>{{data.noGdr}}</td>
+        <td>{{data.patientIsAtBaseline}}</td>
+        <td>{{data.patientIsOnNoPsychMeds}}</td>
+        <td>{{data.DecreaseMed}}</td>
+        <td>{{data.stopMed}}</td>
+      </tr>
+    </tbody>
+    <!-- <pagination-controls (pageChange)="pageNo = $event"></pagination-controls> -->
+  </table>
+</div>

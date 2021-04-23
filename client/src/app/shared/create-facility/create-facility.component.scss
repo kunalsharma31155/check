@@ -1,0 +1,14 @@
+@import "../common/style";
+@import "../../app.component.scss";
+
+.card-title{
+    font-weight: 600;
+    color: $main-font-color;
+}
+.add{
+    background-color: $main-font-color;
+    color : $main-bg-color;
+}
+label{
+    color: grey;
+}

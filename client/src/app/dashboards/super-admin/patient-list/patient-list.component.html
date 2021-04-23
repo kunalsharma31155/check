@@ -1,0 +1,45 @@
+<app-super-admin>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-danger" routerLink="..">
+                    Back
+                </button>&nbsp;
+                <label class="link">{{navLink}}</label>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <input type="text" [(ngModel)]="searchTerm" placeholder="Search" (input)="searchPatient()" class="mt-2 search">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-info" (click)="newPatient()">
+                    Add Patient
+                </button>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered mt-2">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>DOB</th>
+                <th>Facility</th>
+                <th>Provider</th>
+                <th>Update</th>
+                <th>Visit Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:config.currentPage , totalItems : config.totalItems }">
+                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                <td>{{patient.patientFacility}}</td>
+                <td>{{patient.patientProvider}}</td>
+                <td style="cursor: pointer;"><i class="fa fa-pencil-square-o" (click)="updatePatient(patient)" aria-hidden="true"></i></td>
+                <td style="cursor: pointer;"><i class="fa fa-info-circle" routerLink="/dashboard/visit-details/{{patient._id}}" aria-hidden="true"></i></td>
+            </tr>
+        </tbody>
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </table>
+</app-super-admin>

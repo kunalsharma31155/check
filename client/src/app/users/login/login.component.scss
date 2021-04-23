@@ -1,0 +1,23 @@
+@import "../../app.component.scss";
+.fullpage {
+  // background: #383a3d;
+  height: 100vh;
+  padding-top: 25vh;
+  background-image: url("../../../assets/img/br.jpg");
+}
+form {
+  background: #fff;
+}
+/* set padding and size of th form */
+.form-container {
+  border-radius: 10px;
+  padding: 30px;
+}
+label {
+  color: grey;
+  font-weight: 500;
+}
+.background {
+  // background-color: $main-font-color;
+  color: $main-font-color;
+}

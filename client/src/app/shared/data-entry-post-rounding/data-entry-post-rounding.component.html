@@ -1,0 +1,50 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3">Provider Post Rounding Sheet</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="postRoundingForm" (ngSubmit)="submitForm()">
+            <div class="form-group">
+                <label for="facility">Select Facility</label>
+                <select class="form-control" formControlName="facilityId" id="facility">
+                    <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                        {{facility.facilityName}}
+                    </option>
+                </select>
+                <div *ngIf="formSubmitted && f.facilityId.errors" class="invalid-feedback">
+                    <div *ngIf="f.facilityId.errors.required">*Facility is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="provider">Select Provider</label>
+                <select class="form-control" formControlName="providerId" id="provider">
+                    <option *ngFor="let provider of providers" value={{provider._id}}>
+                        {{provider.firstName}} {{provider.lastName}}
+                    </option>
+                </select>
+                <div *ngIf="formSubmitted && f.providerId.errors" class="invalid-feedback">
+                    <div *ngIf="f.providerId.errors.required">*Provider is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="date" formControlName="dateOfService" class="form-control">
+                <div *ngIf="formSubmitted && f.dateOfService.errors" class="invalid-feedback">
+                    <div *ngIf="f.dateOfService.errors.required">*Date of service is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Post Rounding Sheet</label>
+                <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
+                <div *ngIf="formSubmitted && f.image.errors" class="invalid-feedback">
+                    <div *ngIf="f.image.errors.required">*Post rounding sheet is required</div>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" class="btn btn-custom add">Save</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

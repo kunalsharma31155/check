@@ -1,0 +1,962 @@
+<app-super-admin>
+    <div class="container-fluid">
+        <h1 class="title">REPORTS</h1>
+        <div class="row mt-4 mb-4">
+            <div class="col-md-2" *ngIf="permission?.providerReport == true">
+                <button type="button" class="btn btn-outline-custom" (click)="collapseFunction('isCollapsed')"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                Provider Reports
+                </button>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-custom" (click)="collapseFunction('isCollapsed1')"
+                    [attr.aria-expanded]="!isCollapsed1" aria-controls="collapseExample">
+                    Patient Reports
+                </button>
+            </div>
+            <div class="col-md-2" *ngIf="permission?.facilityReport == true">
+                <button type="button" class="btn btn-outline-custom" (click)="collapseFunction('isCollapsed2')"
+                    [attr.aria-expanded]="!isCollapsed2" aria-controls="collapseExample">
+                    Facility Reports
+                </button>
+            </div>
+            <div class="col-md-2" *ngIf="permission?.adminReport == true">
+                <button type="button" class="btn btn-outline-custom" (click)="collapseFunction('isCollapsed7')"
+                    [attr.aria-expanded]="!isCollapsed7" aria-controls="collapseExample">
+                    Admin Reports
+                </button>
+            </div>
+        </div>
+        <!-- provider report starts -->
+        <div id="collapseExample" class="mt-5" [ngbCollapse]="isCollapsed">
+            <div class="card">
+                <div>
+                    <i class="fa fa-times" aria-hidden="true" (click)="isCollapsed = !isCollapsed"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="title t1">PROVIDER REPORTS</h3>
+                    <div class="row mt-4">
+                        <div class="col-md-4 offset-md-2" *ngIf="permission?.providerPerformanceReportDetail == true">
+                            <button class="btn btn-custom" (click)="collapseChild1Function('isCollapsed5')"
+                            [attr.aria-expanded]="!isCollapsed5">Provider Performance Report</button>
+                        </div>
+                        <div class="col-md-4" *ngIf="permission?.briefProviderPerformanceReportDetail == true">
+                            <button class="btn btn-custom" (click)="collapseChild1Function('isCollapsed6')"
+                            [attr.aria-expanded]="!isCollapsed6">Brief Provider Performance Report</button>
+                        </div>
+                    </div>
+
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed5">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Provider Performance Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="providerPerformanceReportForm" (ngSubmit)="providerPerformanceReportsubmitForm()">
+                                <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="facility">Select Provider</label>
+                                    <select class="form-control" formControlName="provider" id="provider" (change)="updateproviderPerformanceReport($event.target.value,'provider')">
+                                        <option *ngFor="let provider of providers" value={{provider._id}}>
+                                            {{provider.firstName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted1 && providerPerformanceReport.provider.errors?.required" style="color: red;">Provider is required</div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label for="facility">Select Facility</label>
+                                  <select class="form-control" formControlName="facility" id="facility" (change)="updateproviderPerformanceReport($event.target.value,'facility')">
+                                      <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                          {{facility.facilityName}}
+                                      </option>
+                                  </select>
+                                  <div *ngIf="formSubmitted1 && providerPerformanceReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="facilityDate">Date From</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted1 && providerPerformanceReport.facilityDateFrom.errors }">
+                                    <div *ngIf="formSubmitted1 && providerPerformanceReport.facilityDateFrom.errors" class="invalid-feedback">
+                                        <div *ngIf="providerPerformanceReport.facilityDateFrom.errors.required">From Date is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="facilityDate">Date To</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted1 && providerPerformanceReport.facilityDateTo.errors }">
+                                    <div *ngIf="formSubmitted1 && providerPerformanceReport.facilityDateTo.errors" class="invalid-feedback">
+                                        <div *ngIf="providerPerformanceReport.facilityDateTo.errors.required">To Date is required</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed6">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Brief Provider Performance Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="briefproviderPerformanceReportForm" (ngSubmit)="briefproviderPerformanceReportsubmitForm()">
+                                <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="facility">Select Provider</label>
+                                    <select class="form-control" formControlName="provider" id="provider" (change)="updatebriefproviderPerformanceReport($event.target.value,'provider')">
+                                        <option *ngFor="let provider of providers" value={{provider._id}}>
+                                            {{provider.firstName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted2 && briefproviderPerformanceReport.provider.errors?.required" style="color: red;">Provider is required</div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="facility">Select Facility</label>
+                                    <select class="form-control" formControlName="facility" id="facility" (change)="updatebriefproviderPerformanceReport($event.target.value,'facility')">
+                                        <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                            {{facility.facilityName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted2 && briefproviderPerformanceReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="facilityDate">Date From</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted2 && briefproviderPerformanceReport.facilityDateFrom.errors }">
+                                    <div *ngIf="formSubmitted2 && briefproviderPerformanceReport.facilityDateFrom.errors" class="invalid-feedback">
+                                        <div *ngIf="briefproviderPerformanceReport.facilityDateFrom.errors.required">From Date is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="facilityDate">Date To</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted2 && briefproviderPerformanceReport.facilityDateTo.errors }">
+                                    <div *ngIf="formSubmitted2 && briefproviderPerformanceReport.facilityDateTo.errors" class="invalid-feedback">
+                                        <div *ngIf="briefproviderPerformanceReport.facilityDateTo.errors.required">To Date is required</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- provider report ends -->
+        <!-- patient report starts -->
+
+        <div id="collapseExample" class="mt-5" [ngbCollapse]="isCollapsed1">
+            <div class="card p-3">
+                <div>
+                    <i class="fa fa-times" aria-hidden="true" (click)="isCollapsed1 = !isCollapsed1"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="title t1">PATIENT REPORTS</h3>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-3 offset-md-2" *ngIf="permission?.patientSummaryReport == true">
+                    <button class="btn btn-custom btn-block" (click)="collapseChild3Function('patientSummaryReport')"
+                      [attr.aria-expanded]="!patientSummaryReport">Patient Summary Report</button>
+                  </div>
+                </div>
+                <!-- patient summary report starts -->
+                <div id="collapseExample" [ngbCollapse]="patientSummaryReport">
+                  <div class="card mt-5">
+                    <h3 class="mt-4 ml-3 title">Patient Summary Report</h3>
+                    <div class="card-body mt-3">
+                      <form [formGroup]="patientSummaryReportForm" (ngSubmit)="patientSummaryReportSubmitForm()">
+                        <div class="row">
+                          <div class="form-group col-md-3">
+                            <label for="facility">Select Facility</label>
+                            <select class="form-control" formControlName="facility" id="facility"
+                              (change)="updatePatientSummaryReport($event.target.value,'facility')">
+                              <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                {{facility.facilityName}}
+                              </option>
+                            </select>
+                            <div *ngIf="formSubmittedPatientSummaryReport && getpatientSummaryReport.facility.errors?.required" style="color: red;">Facility
+                              is required</div>
+                          </div>
+                          <div class="form-group col-md-3 ">
+                            <label for="facilityDate">Date From</label>
+                            <input type="date" class="dateInput" formControlName="facilityDateFrom"
+                              [ngClass]="{ 'is-invalid': formSubmittedPatientSummaryReport && getpatientSummaryReport.facilityDateFrom.errors }">
+                            <div *ngIf="formSubmittedPatientSummaryReport && getpatientSummaryReport.facilityDateFrom.errors" class="invalid-feedback">
+                              <div *ngIf="getpatientSummaryReport.facilityDateFrom.errors.required">From Date is required</div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label for="facilityDate">Date To</label>
+                            <input type="date" class="dateInput" formControlName="facilityDateTo"
+                              [ngClass]="{ 'is-invalid': formSubmittedPatientSummaryReport && getpatientSummaryReport.facilityDateTo.errors }">
+                            <div *ngIf="formSubmittedPatientSummaryReport && getpatientSummaryReport.facilityDateTo.errors" class="invalid-feedback">
+                              <div *ngIf="getpatientSummaryReport.facilityDateTo.errors.required">To Date is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-custom">Get Report</button>
+                        </div>
+                      </form>
+                      <!--patient list modal starts -->
+                      <ng-template #content3 let-modal>
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="modal-basic-title">Patient List Matching Criteria</h4>
+                          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+
+                          <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                          <table class="table table-bordered mt-2">
+                            <thead>
+                              <tr>
+                                <th>Patient Name</th>
+                                <th>DOB</th>
+                                <th>View</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:pageNo }">
+                                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords3(patient)"></i></td>
+                              </tr>
+                            </tbody>
+                            <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                          </table>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <!-- patient summary report ends -->
+            </div>
+        </div>
+
+        <!-- patient report ends -->
+        <!-- facility report starts -->
+        <div id="collapseExample" class="mt-5" [ngbCollapse]="isCollapsed2">
+            <div class="card">
+                <div>
+                    <i class="fa fa-times" aria-hidden="true" (click)="isCollapsed2 = !isCollapsed2"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="title t1">FACILITY REPORTS</h3>
+                    <div class="row mt-4">
+                        <!-- <div class="col-md-4">
+                            <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsed4')"
+                            [attr.aria-expanded]="!isCollapsed4">Facility Post Rounding Report</button>
+                        </div> -->
+                        <div class="col-md-3" *ngIf="permission?.facilityPsychotropicNumberReport == true">
+                            <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsed3')"
+                            [attr.aria-expanded]="!isCollapsed3">Facility Psychotropic Report</button>
+                        </div>
+                        <div class="col-md-3" *ngIf="permission?.billingCompanyPatientNotesReport == true">
+                            <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsed9')"
+                            [attr.aria-expanded]="!isCollapsed9">Facility Patient Notes Report</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isFacilityPostRoundingCollapsed')"
+                            [attr.aria-expanded]="!isFacilityPostRoundingCollapsed">Facility Post Rounding Report</button>
+                        </div>
+                        <div class="col-md-3" *ngIf="permission?.facilitySnapSHotReport == true">
+                          <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsed10')"
+                            [attr.aria-expanded]="!isCollapsed10">Facility Snap-Shot Report</button>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+
+                      <div class="col-md-3" *ngIf="permission?.facilityPracticePerformanceReport == true">
+                        <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsed11')"
+                            [attr.aria-expanded]="!isCollapsed11">Practice Performance Report</button>
+                      </div>
+                      <div class="col-md-3" *ngIf="permission?.powerOfAttorneyReport == true">
+                        <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsedForPatientPowerofAttorneyReport')"
+                            [attr.aria-expanded]="!isCollapsedForPatientPowerofAttorneyReport">Power of Attorney Report </button>
+                      </div>
+                      <div class="col-md-3" *ngIf="permission?.billingCompanyMissingDocumentsReport == true">
+                        <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsedForBillingmissingreports')"
+                          [attr.aria-expanded]="!isCollapsedForBillingmissingreports">Missing Documents Reports</button>
+                      </div>
+                      <div class="col-md-3" *ngIf="permission?.facilityDetailedGDRReport == true">
+                        <button class="btn btn-custom btn-block" (click)="collapseChild2Function('isCollapsedForFacilityDetailedGDRreports')"
+                          [attr.aria-expanded]="!isCollapsedForFacilityDetailedGDRreports">Facility Detailed GDR Report</button>
+                      </div>
+                    </div>
+                    <!-- facility post rounding report starts -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed4">
+                        <div class="card mt-5">
+                            <div class="card-body">
+                                hnji4
+                            </div>
+                        </div>
+                    </div>
+                    <!-- facility post rounding report ends -->
+                    <!-- facility psychotropic Number report starts -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed3">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Facility Psychotropic Number Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="psychotropicReportForm" (ngSubmit)="psychotropicReportsubmitForm()">
+                                <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="facility">Select Facility</label>
+                                    <select class="form-control" formControlName="facility" id="facility" (change)="updatepsychotropicReportForm($event.target.value,'facility')">
+                                        <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                            {{facility.facilityName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted && psychotropicReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                </div>
+                                <div class="form-group col-md-4 ">
+                                    <label for="facilityDate">Month From</label>
+                                    <input type="month" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted && psychotropicReport.facilityDateFrom.errors }">
+                                    <div *ngIf="formSubmitted && psychotropicReport.facilityDateFrom.errors" class="invalid-feedback">
+                                        <div *ngIf="psychotropicReport.facilityDateFrom.errors.required">From Date is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="facilityDate">Month To</label>
+                                    <input type="month" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted && psychotropicReport.facilityDateTo.errors }">
+                                    <div *ngIf="formSubmitted && psychotropicReport.facilityDateTo.errors" class="invalid-feedback">
+                                        <div *ngIf="psychotropicReport.facilityDateTo.errors.required">To Date is required</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- facility psychotropic number report ends -->
+
+                    <!-- facility billing company patient number report start -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed9">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Patient Notes Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="facilityPatientNumberReportForm" (ngSubmit)="facilityPatientNumberReportsubmitForm()">
+                                  <div class="row">
+                                    <div class="form-group col-md-3">
+                                      <label for="facility">Select Facility</label>
+                                      <select class="form-control" formControlName="facility" id="facility" (change)="updatefacilityPatientNumberReportsubmitForm($event.target.value,'facility')">
+                                          <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                              {{facility.facilityName}}
+                                          </option>
+                                      </select>
+                                      <div *ngIf="formSubmitted4 && facilityPatientNumberReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label for="facilityDate">Date From</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted4 && facilityPatientNumberReport.facilityDateFrom.errors }">
+                                        <div *ngIf="formSubmitted4 && facilityPatientNumberReport.facilityDateFrom.errors" class="invalid-feedback">
+                                            <div *ngIf="facilityPatientNumberReport.facilityDateFrom.errors.required">From Date is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="facilityDate">Date To</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted4 && facilityPatientNumberReport.facilityDateTo.errors }">
+                                        <div *ngIf="formSubmitted4 && facilityPatientNumberReport.facilityDateTo.errors" class="invalid-feedback">
+                                            <div *ngIf="facilityPatientNumberReport.facilityDateTo.errors.required">To Date is required</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                                <!--patient list modal starts -->
+                                <ng-template #content1 let-modal>
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="modal-basic-title">Patient List Matching Criteria</h4>
+                                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                      <table class="table table-bordered mt-2">
+                                          <thead>
+                                              <tr>
+                                                  <th>Patient Name</th>
+                                                  <th>DOB</th>
+                                                  <th>View</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:pageNo }">
+                                                  <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                  <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                  <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords(patient)"></i></td>
+                                              </tr>
+                                          </tbody>
+                                          <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                      </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                  </div>
+                              </ng-template>
+                              <ng-template #content2 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Search Patient To Update</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                    <table class="table table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient Name</th>
+                                                <th>DOB</th>
+                                                <th>View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:pageNo }">
+                                                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords2(patient)"></i></td>
+                                            </tr>
+                                        </tbody>
+                                        <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </ng-template>
+                                <!-- patient list modal ends -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- facility billing company report ends -->
+
+                    <!-- Facility Post Rounding Report Start-->
+                    <div id="collapseExample" [ngbCollapse]="isFacilityPostRoundingCollapsed">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Facility Post Rounding Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="facilityPostRoundingReportForm" (ngSubmit)="submitFacilityPostRoundingReportForm()">
+                                  <div class="row">
+                                    <div class="form-group col-md-3">
+                                      <label for="facility">Select Facility</label>
+                                      <select class="form-control" formControlName="facility" id="facility">
+                                          <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                              {{facility.facilityName}}
+                                          </option>
+                                      </select>
+                                      <div *ngIf="formSubmittedForfacilityPostRounding && facilityPostRoundingReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label for="facilityDate">Date From</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmittedForfacilityPostRounding && facilityPostRoundingReport.facilityDateFrom.errors }">
+                                        <div *ngIf="formSubmittedForfacilityPostRounding && facilityPostRoundingReport.facilityDateFrom.errors">
+                                            <div style="color: red;" *ngIf="facilityPostRoundingReport.facilityDateFrom.errors.required">From Date is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="facilityDate">Date To</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmittedForfacilityPostRounding && facilityPostRoundingReport.facilityDateTo.errors }">
+                                        <div *ngIf="formSubmittedForfacilityPostRounding && facilityPostRoundingReport.facilityDateTo.errors">
+                                            <div  style="color: red;" *ngIf="facilityPostRoundingReport.facilityDateTo.errors.required">To Date is required</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                                <!--patient list modal starts -->
+                                <!-- <ng-template #contentForFacilityPostRounding let-modal>
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="modal-basic-title">Patient List Matching Criteria</h4>
+                                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                      <table class="table table-bordered mt-2">
+                                          <thead>
+                                              <tr>
+                                                  <th>Patient Name</th>
+                                                  <th>DOB</th>
+                                                  <th>View</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                  <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                  <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                  <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords(patient)"></i></td>
+                                              </tr>
+                                          </tbody>
+                                          <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                      </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                  </div>
+                              </ng-template>
+                              <ng-template #content2 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Search Patient To Update</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                    <table class="table table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient Name</th>
+                                                <th>DOB</th>
+                                                <th>View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords2(patient)"></i></td>
+                                            </tr>
+                                        </tbody>
+                                        <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </ng-template> -->
+                                <!-- patient list modal ends -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Facility Post Rounding Report End -->
+
+                    <!-- Patient/Power of Attorney Report Start-->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsedForPatientPowerofAttorneyReport">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Patient/Power of Attorney Report </h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="PowerOfAttorneyReportForm" (ngSubmit)="submitPowerOfAttorneyReportForm()">
+                                  <div class="row">
+                                    <div class="form-group col-md-3">
+                                      <label for="facility">Select Patient</label>
+                                      <select class="form-control" formControlName="patient" id="patient">
+                                          <option *ngFor="let patient of patients" value={{patient._id}}>
+                                              {{patient.firstName}} {{patient?.lastName}}
+                                          </option>
+                                      </select>
+                                      <div *ngIf="formSubmittedForPowerOfAttorneyReport && powerOfAttorneyReport.patient.errors?.required" style="color: red;">Patient is required</div>
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label for="facilityDate">Date From</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmittedForPowerOfAttorneyReport && powerOfAttorneyReport.facilityDateFrom.errors }">
+                                        <div *ngIf="formSubmittedForPowerOfAttorneyReport && powerOfAttorneyReport.facilityDateFrom.errors">
+                                            <div style="color: red;" *ngIf="powerOfAttorneyReport.facilityDateFrom.errors.required">From Date is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="facilityDate">Date To</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmittedForPowerOfAttorneyReport && powerOfAttorneyReport.facilityDateTo.errors }">
+                                        <div *ngIf="formSubmittedForPowerOfAttorneyReport && powerOfAttorneyReport.facilityDateTo.errors">
+                                            <div  style="color: red;" *ngIf="powerOfAttorneyReport.facilityDateTo.errors.required">To Date is required</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                                <!--patient list modal starts -->
+                                <!-- <ng-template #contentForFacilityPostRounding let-modal>
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="modal-basic-title">Patient List Matching Criteria</h4>
+                                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                      <table class="table table-bordered mt-2">
+                                          <thead>
+                                              <tr>
+                                                  <th>Patient Name</th>
+                                                  <th>DOB</th>
+                                                  <th>View</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                  <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                  <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                  <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords(patient)"></i></td>
+                                              </tr>
+                                          </tbody>
+                                          <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                      </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                  </div>
+                              </ng-template>
+                              <ng-template #content2 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Search Patient To Update</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                    <table class="table table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient Name</th>
+                                                <th>DOB</th>
+                                                <th>View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords2(patient)"></i></td>
+                                            </tr>
+                                        </tbody>
+                                        <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </ng-template> -->
+                                <!-- patient list modal ends -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Patient/Power of Attorney Report End -->
+
+                     <!-- Billing company missing documents reports Start-->
+                     <div id="collapseExample" [ngbCollapse]="isCollapsedForBillingmissingreports">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Missing Documents Reports</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="MissingDocumentsReportForm" (ngSubmit)="submitMissingDocumentsReportForm()">
+                                  <div class="row">
+                                    <div class="form-group col-md-3">
+                                      <label for="facility">Select Facility</label>
+                                      <select class="form-control" formControlName="facility" id="facility">
+                                          <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                              {{facility.facilityName}}
+                                          </option>
+                                      </select>
+                                      <div *ngIf="formSubmittedForMissingDocumentsReport && missingDocumentsReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label for="facilityDate">Date From</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmittedForMissingDocumentsReport && missingDocumentsReport.facilityDateFrom.errors }">
+                                        <div *ngIf="formSubmittedForMissingDocumentsReport && missingDocumentsReport.facilityDateFrom.errors">
+                                            <div style="color: red;" *ngIf="missingDocumentsReport.facilityDateFrom.errors.required">From Date is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="facilityDate">Date To</label>
+                                        <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmittedForMissingDocumentsReport && missingDocumentsReport.facilityDateTo.errors }">
+                                        <div *ngIf="formSubmittedForMissingDocumentsReport && missingDocumentsReport.facilityDateTo.errors">
+                                            <div  style="color: red;" *ngIf="missingDocumentsReport.facilityDateTo.errors.required">To Date is required</div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                                <!--patient list modal starts -->
+                                <!-- <ng-template #contentForFacilityPostRounding let-modal>
+                                  <div class="modal-header">
+                                      <h4 class="modal-title" id="modal-basic-title">Patient List Matching Criteria</h4>
+                                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                          <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                      <table class="table table-bordered mt-2">
+                                          <thead>
+                                              <tr>
+                                                  <th>Patient Name</th>
+                                                  <th>DOB</th>
+                                                  <th>View</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                  <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                  <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                  <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords(patient)"></i></td>
+                                              </tr>
+                                          </tbody>
+                                          <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                      </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                  </div>
+                              </ng-template>
+                              <ng-template #content2 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Search Patient To Update</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="search">
+                                    <table class="table table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Patient Name</th>
+                                                <th>DOB</th>
+                                                <th>View</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let patient of patients | filter:searchTerm | paginate : { itemsPerPage:5, currentPage:pageNo}">
+                                                <td>{{patient.firstName}} {{patient.lastName}}</td>
+                                                <td>{{patient.patientDOB | date:'MM-dd-yyyy'}}</td>
+                                                <td><i class="fa fa-pencil-square-o icon" aria-hidden="true" (click)="decideForRecords2(patient)"></i></td>
+                                            </tr>
+                                        </tbody>
+                                        <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </ng-template> -->
+                                <!-- patient list modal ends -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Billing company missing documents reports End -->
+
+                    <!-- facility Detailed GDR Report Starts -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsedForFacilityDetailedGDRreports">
+                      <div class="card mt-5">
+                        <h3 class="mt-4 ml-3 title">Facility Detailed GDR Reports</h3>
+                        <div class="card-body mt-3">
+                          <form [formGroup]="FacilityDetailedGDRReportForm" (ngSubmit)="submitFacilityDetailedGDRReportForm()">
+                            <div class="row">
+                              <div class="form-group col-md-3">
+                                <label for="facility">Select Facility</label>
+                                <select class="form-control" formControlName="facility" id="facility">
+                                  <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                    {{facility.facilityName}}
+                                  </option>
+                                </select>
+                                <div *ngIf="formSubmittedForFacilityDetailedGDRReport && facilityDetailedGDRReport.facility.errors?.required"
+                                  style="color: red;">Facility is required</div>
+                              </div>
+                              <div class="form-group col-md-3 ">
+                                <label for="facilityDate">Date From</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateFrom"
+                                  [ngClass]="{ 'is-invalid': formSubmittedForFacilityDetailedGDRReport && facilityDetailedGDRReport.facilityDateFrom.errors }">
+                                <div *ngIf="formSubmittedForFacilityDetailedGDRReport && facilityDetailedGDRReport.facilityDateFrom.errors">
+                                  <div style="color: red;" *ngIf="facilityDetailedGDRReport.facilityDateFrom.errors.required">From Date is
+                                    required</div>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-3">
+                                <label for="facilityDate">Date To</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateTo"
+                                  [ngClass]="{ 'is-invalid': formSubmittedForFacilityDetailedGDRReport && facilityDetailedGDRReport.facilityDateTo.errors }">
+                                <div *ngIf="formSubmittedForFacilityDetailedGDRReport && facilityDetailedGDRReport.facilityDateTo.errors">
+                                  <div style="color: red;" *ngIf="facilityDetailedGDRReport.facilityDateTo.errors.required">To Date is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <button type="submit" class="btn btn-custom">Get Report</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- facility Detailed GDR Report ends -->
+
+                    <!-- facility snap-shot report starts -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed10">
+                      <div class="card mt-5">
+                        <h3 class="mt-4 ml-3 title">Facility Snap-Shot Report</h3>
+                        <div class="card-body mt-3">
+                            <form [formGroup]="snapShotReportForm" (ngSubmit)="snapShotReportsubmitForm()">
+                            <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="facility">Select Facility</label>
+                                <select class="form-control" formControlName="facility" id="facility" (change)="updatepsychotropicReportForm($event.target.value,'facility')">
+                                    <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                        {{facility.facilityName}}
+                                    </option>
+                                </select>
+                                <div *ngIf="formSubmitted5 && snapShotReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                            </div>
+                            <div class="form-group col-md-4 ">
+                                <label for="facilityDate">Date From</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted5 && snapShotReport.facilityDateFrom.errors }">
+                                <div *ngIf="formSubmitted5 && snapShotReport.facilityDateFrom.errors" class="invalid-feedback">
+                                    <div *ngIf="snapShotReport.facilityDateFrom.errors.required">From Date is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="facilityDate">Date To</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted5 && snapShotReport.facilityDateTo.errors }">
+                                <div *ngIf="formSubmitted5 && snapShotReport.facilityDateTo.errors" class="invalid-feedback">
+                                    <div *ngIf="snapShotReport.facilityDateTo.errors.required">To Date is required</div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-custom">Get Report</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- facility snap-shot report ends -->
+                    <!-- facility practice performance report starts -->
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed11">
+                      <div class="card mt-5">
+                        <h3 class="mt-4 ml-3 title">Facility Practice Performance Report</h3>
+                        <div class="card-body mt-3">
+                            <form [formGroup]="facilityPerformanceReportForm" (ngSubmit)="facilityPerformanceReportsubmitForm()">
+                            <div class="row">
+                            <div class="form-group col-md-3">
+                              <label for="facility">Select Facility</label>
+                              <select class="form-control" formControlName="facility" id="facility" (change)="updatefacilityPerformanceReport($event.target.value,'facility')">
+                                  <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                      {{facility.facilityName}}
+                                  </option>
+                              </select>
+                              <div *ngIf="formSubmitted6 && facilityPerformanceReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                            </div>
+                            <div class="form-group col-md-3">
+                              <label for="facility">Select Provider</label>
+                              <select class="form-control" formControlName="provider" id="provider" (change)="updatefacilityPerformanceReport($event.target.value,'provider')">
+                                  <option *ngFor="let provider of providers" value={{provider._id}}>
+                                      {{provider.firstName}}
+                                  </option>
+                              </select>
+                              <div *ngIf="formSubmitted6 && facilityPerformanceReport.provider.errors?.required" style="color: red;">Provider is required</div>
+                            </div>
+                            <div class="form-group col-md-3 ">
+                                <label for="facilityDate">Date From</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted6 && facilityPerformanceReport.facilityDateFrom.errors }">
+                                <div *ngIf="formSubmitted6 && facilityPerformanceReport.facilityDateFrom.errors" class="invalid-feedback">
+                                    <div *ngIf="facilityPerformanceReport.facilityDateFrom.errors.required">From Date is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="facilityDate">Date To</label>
+                                <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted6 && facilityPerformanceReport.facilityDateTo.errors }">
+                                <div *ngIf="formSubmitted6 && facilityPerformanceReport.facilityDateTo.errors" class="invalid-feedback">
+                                    <div *ngIf="facilityPerformanceReport.facilityDateTo.errors.required">To Date is required</div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-custom">Get Report</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- facility practice performance report ends -->
+                </div>
+            </div>
+        </div>
+        <!-- facility report ends -->
+        <!-- admin report starts -->
+        <div id="collapseExample" class="mt-5" [ngbCollapse]="isCollapsed7">
+            <div class="card">
+                <div>
+                    <i class="fa fa-times" aria-hidden="true" (click)="isCollapsed7 = !isCollapsed7"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="title t1">ADMIN REPORTS</h3>
+                    <div class="row">
+                        <div class="col-md-4" *ngIf="permission?.adminPriorAuthReport == true">
+                            <button class="btn btn-custom" (click)="isCollapsed8 = !isCollapsed8"
+                            [attr.aria-expanded]="!isCollapsed8">Admin Prior Auth Report</button>
+                        </div>
+                    </div>
+                    <div id="collapseExample" [ngbCollapse]="isCollapsed8">
+                        <div class="card mt-5">
+                            <h3 class="mt-4 ml-3 title">Admin Prior Auth Report</h3>
+                            <div class="card-body mt-3">
+                                <form [formGroup]="adminPriorReportForm" (ngSubmit)="adminPriorAuthReportsubmitForm()">
+                                <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="facility">Select Facility</label>
+                                    <select class="form-control" formControlName="facility" id="facility" (change)="updateadminPriorReport($event.target.value,'facility')">
+                                        <option *ngFor="let facility of facilitys" value={{facility._id}}>
+                                            {{facility.facilityName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted3 && adminpriorReport.facility.errors?.required" style="color: red;">Facility is required</div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="facility">Select Provider</label>
+                                    <select class="form-control" formControlName="provider" id="provider" (change)="updateadminPriorReport($event.target.value,'provider')">
+                                        <option *ngFor="let provider of providers" value={{provider._id}}>
+                                            {{provider.firstName}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="formSubmitted3 && adminpriorReport.provider.errors?.required" style="color: red;">Provider is required</div>
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label for="facilityDate">Date From</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateFrom" [ngClass]="{ 'is-invalid': formSubmitted3 && adminpriorReport.facilityDateFrom.errors }">
+                                    <div *ngIf="formSubmitted3 && adminpriorReport.facilityDateFrom.errors" class="invalid-feedback">
+                                        <div *ngIf="adminpriorReport.facilityDateFrom.errors.required">From Date is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="facilityDate">Date To</label>
+                                    <input type="date" class="dateInput" formControlName="facilityDateTo" [ngClass]="{ 'is-invalid': formSubmitted3 && adminpriorReport.facilityDateTo.errors }">
+                                    <div *ngIf="formSubmitted3 && adminpriorReport.facilityDateTo.errors" class="invalid-feedback">
+                                        <div *ngIf="adminpriorReport.facilityDateTo.errors.required">To Date is required</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-custom">Get Report</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- admin report ends -->
+    </div>
+</app-super-admin>

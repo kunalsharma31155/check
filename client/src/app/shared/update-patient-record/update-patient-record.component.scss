@@ -1,0 +1,27 @@
+@import "../../app.component.scss";
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+}
+.add {
+  background-color: $main-font-color;
+  color: $main-bg-color;
+}
+.card-title {
+  color: $main-font-color;
+}
+.sub-heading {
+  font-size: 13px;
+  font-weight: 500;
+}
+.md-check {
+  margin-top: 0px;
+}
+.form-control {
+  height: 30px;
+  padding: 0px 0px 0px 10px;
+}
+input::-webkit-input-placeholder {
+  font-size: 13px;
+}

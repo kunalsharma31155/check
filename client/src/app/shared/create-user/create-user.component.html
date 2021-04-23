@@ -1,0 +1,148 @@
+<div class="card" *ngIf="selectedUser == undefined">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3">New User</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+            <div class="form-group" >
+                <input type="text" class="form-control" formControlName="firstName" [ngClass]="{ 'is-invalid': formSubmitted && f.firstName.errors }" placeholder="First Name">
+                <div *ngIf="formSubmitted && f.firstName.errors" class="invalid-feedback">
+                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="lastName" [ngClass]="{ 'is-invalid': formSubmitted && f.lastName.errors }" placeholder="Last Name">
+                <div *ngIf="formSubmitted && f.lastName.errors" class="invalid-feedback">
+                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="userRole">Assign Role</label>
+                <select class="form-control" formControlName="userRole" id="userRole" (change)="updateRole($event.target.value)">
+                    <option *ngFor="let role of roles" value={{role}}>
+                        {{role}}
+                    </option>
+                </select>
+                <div *ngIf="formSubmitted && f.userRole.errors" class="invalid-feedback">
+                    <div *ngIf="f.userRole.errors.required">User Role is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': formSubmitted && f.email.errors }" placeholder="Email">
+                <div *ngIf="formSubmitted && f.email.errors" class="invalid-feedback">
+                 <div *ngIf="f.email.errors.required">Email is required</div>
+                 <div *ngIf="f.email.errors.pattern">Enter Valid Email</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" formControlName="userLoginId" [ngClass]="{ 'is-invalid': formSubmitted && f.userLoginId.errors }" placeholder="Login Id">
+                <div *ngIf="formSubmitted && f.userLoginId.errors" class="invalid-feedback">
+                 <div *ngIf="f.userLoginId.errors.required">User LoginId is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-11">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control password-type"
+                        style="border-right:none;"
+                        formControlName="password" [ngClass]="{ 'is-invalid': formSubmitted && f.password.errors }" placeholder="Password">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="password-type bg-transparent" (click)="togglePassword()"
+                        style="float: right; padding : 6px 12px; border: 1px solid #ced4da;
+                        border-left: none; border-radius: 0.25rem; outline:none;">
+                            <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="formSubmitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.pattern">Enter Strong Password</div>
+                </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+              <div class="col-md-11">
+                <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control password-type" formControlName="confirmPassword"
+                [ngClass]="{ 'is-invalid': formSubmitted && f.confirmPassword.errors }" placeholder="Confirm Password">
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="password-type bg-transparent" (click)="toggleConfirmPassword()"
+                style="float: right; padding : 6px 12px; border: 1px solid #ced4da;
+                border-left: none; border-radius: 0.25rem; outline:none;">
+                    <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                </button>
+              </div>
+              </div>
+                <div *ngIf="formSubmitted && f.confirmPassword.errors" style="color: red;">
+                    <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Password and Confirm Password must match with each other.</div>
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.minlength">Password must be 8 character long</div>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" class="btn btn-custom add">Add User</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card" *ngIf="selectedUser != undefined">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3">Update User</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+            <div class="row">
+                <div class="col-md-3 listName">First Name : </div>
+                <div class="col-md-5 listName">{{selectedUser.firstName}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 listName">Last Name : </div>
+                <div class="col-md-5 listName">{{selectedUser.lastName}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 listName">Login ID : </div>
+                <div class="col-md-5 listName">{{selectedUser.userLoginId}}</div>
+            </div>
+            <div class="form-group mt-2">
+                <label for="userRole">Assign Role</label>
+                <select class="form-control" formControlName="userRole" id="userRole" (change)="updateRole($event.target.value)">
+                    <option *ngFor="let role of roles" value={{role}}>
+                        {{role}}
+                    </option>
+                </select>
+                <div *ngIf="formSubmitted && f.userRole.errors" class="invalid-feedback">
+                    <div *ngIf="f.userRole.errors.required">User Role is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" formControlName="email" [ngClass]="{ 'is-invalid': formSubmitted && f.email.errors }" placeholder="Email">
+                <div *ngIf="formSubmitted && f.email.errors" class="invalid-feedback">
+                 <div *ngIf="f.email.errors.required">Email is required</div>
+                 <div *ngIf="f.email.errors.pattern">Enter Valid Email</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="topMargin">Active</label>
+                <div class="onoffswitch">
+                    <input type="checkbox" class="onoffswitch-checkbox form-control1 positionForSwitch" formControlName="activeStatus" id="myonoffswitch" tabindex="0" >
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" class="btn btn-custom add">Update User</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

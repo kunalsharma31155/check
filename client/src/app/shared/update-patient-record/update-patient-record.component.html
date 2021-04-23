@@ -1,0 +1,650 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3" >Update Post Rounding Details for {{patientName}}</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="patientForm" (ngSubmit)="submitForm()">
+            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                    <label for="dateOfService">Date Of Service</label>
+                    <input class="form-control" type="date" formControlName="dateOfService">
+                    <div *ngIf="formSubmitted && f.dateOfService.errors?.required">
+                        <div style="color: red;">*Date Of Service is required</div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="patientFacility">Patient Facility</label>
+                    <select class="form-control" formControlName="patientFacility" id="patientFacility" (change)="updateSelect($event.target.value,'patientFacility')">
+                        <option *ngFor="let role of facilitys" value={{role.facilityName}}>
+                            {{role.facilityName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                <label for="typeOfService">Type Of Service</label>
+                <select class="form-control" formControlName="typeOfService" id="typeOfService"
+                 (change)="updateSelect($event.target.value,'typeOfService')">
+                    <option *ngFor="let typeOfService of typeOfServices" value={{typeOfService}}>
+                        {{typeOfService}}
+                    </option>
+                </select>
+                </div>
+                <div class="form-group col-md-6">
+                <label for="patientProvider">Patient Provider</label>
+                <select class="form-control" formControlName="patientProvider" id="patientProvider" (change)="updateSelect($event.target.value,'patientProvider')">
+                    <option *ngFor="let provider of providers" value={{provider.firstName}}>
+                        {{provider.firstName}}
+                    </option>
+                </select>
+                </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+              <div class="form-group col-md-6">
+                  <div class="row">
+                      <div class="col-md-1">
+                      <label class="md-check">
+                          <input type="checkbox" id="patientDepressiveDisorderDx" name="patientDepressiveDisorderDx" formControlName="patientDepressiveDisorderDx">
+                      </label>
+                      </div>
+                      <div class=" col-md-9">
+                          <label>Patient Has Depressive Disorder Dx</label>
+                      </div>
+                  </div>
+                  <div class="row" *ngIf="f.patientDepressiveDisorderDx.value == true">
+                    <div class=" col-md-6">
+                      <label class="md-check">
+                        <input type="radio" id="shortTermPatient" value="Short Term Patient" formControlName="patientDepressiveDisorderDxDuration">
+                      </label>&nbsp;
+                      <label class="sub-heading">Short Term Patient</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="md-check">
+                        <input type="radio" id="longTermPatient" value="Long Term Patient" formControlName="patientDepressiveDisorderDxDuration">
+                      </label>&nbsp;
+                      <label class="sub-heading">Long Term Patient</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group col-md-6">
+                  <div class="row">
+                      <div class="col-md-1  ">
+                      <label class="md-check">
+                          <input type="checkbox" id="patientCognitiveImpairmentDx" name="patientCognitiveImpairmentDx" formControlName="patientCognitiveImpairmentDx">
+                      </label>
+                      </div>
+                      <div class=" col-md-9">
+                          <label>Patient Has Cognitive Impairment Dx</label>
+                      </div>
+                  </div>
+                  <div class="row" *ngIf="f.patientCognitiveImpairmentDx.value == true">
+                    <div class=" col-md-6">
+                      <label class="md-check">
+                        <input type="radio" id="shortTermPatient" value="Short Term Patient"
+                          formControlName="patientCognitiveImpairmentDxDuration">
+                      </label>&nbsp;
+                      <label class="sub-heading">Short Term Patient</label>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="md-check">
+                        <input type="radio" id="longTermPatient" value="Long Term Patient"
+                          formControlName="patientCognitiveImpairmentDxDuration">
+                      </label>&nbsp;
+                      <label class="sub-heading">Long Term Patient</label>
+                    </div>
+                  </div>
+              </div>
+          </div>
+                      <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                          <div class="row">
+                            <label class="col-md-5 offset-md-1">CPT Code</label>
+                            <div class="col-md-6">
+                              <select class="form-control" formControlName="cptCode" id="cptCode"
+                                (change)="updateSelect($event.target.value,'cptCode')">
+                                <option *ngFor="let code of cptCode" value={{code.cptCode}}>
+                                  {{code.cptCode}}
+                                </option>
+                              </select>
+                            </div>
+                            <div *ngIf="formSubmitted && cpt.errors?.required">
+                              <div style="color: red;">*CPT code is required</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <div class="row">
+                            <div class="col-md-1  ">
+                              <label class="md-check">
+                                <input type="checkbox" id="performedCognitiveAssessmentTest" name="performedCognitiveAssessmentTest"
+                                  formControlName="performedCognitiveAssessmentTest">
+                              </label>
+                            </div>
+                            <div class=" col-md-10">
+                              <label>Performed Cognitive Assessment</label>&nbsp; &nbsp; &nbsp;
+                              <button type="button" class="btn btn-primary btn-sm" *ngIf="f.performedCognitiveAssessmentTest.value == true"
+                              style="font-size:8px; padding:5px;"
+                                (click)="addCognitiveAssessmentTest()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </div>
+                          </div>
+                          <div class="row" *ngIf="f.performedCognitiveAssessmentTest.value == true">
+                            <div class="col-md-5 offset-md-1" formArrayName="performedCognitiveAssessmentTestName">
+                              <div *ngFor="let item of CognitiveAssessmentTestName.controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+                                <select class="form-control mt-2" formControlName="performedCognitiveAssessmentTestName"
+                                  id="performedCognitiveAssessmentTestName"
+                                  (change)="updateSelect($event.target.value,'performedCognitiveAssessmentTestName')">
+                                  <option *ngFor="let test of cognitiveAssessmentTest" value={{test}}>
+                                    {{test}}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-4" formArrayName="performedCognitiveAssessmentTestScore">
+                              <div *ngFor="let item of CognitiveAssessmentTestScore.controls; let pointIndex=index"
+                                [formGroupName]="pointIndex">
+                                <div class="row">
+                                  <input type="text" class="col-md-8 form-control mt-2" formControlName="performedCognitiveAssessmentTestScore"
+                                    placeholder="Test Score" style=" border-radius: 5px;">
+                                  <i class="col-md-4 fa fa-times-circle mt-3" style="color: red;" aria-hidden="true"
+                                    (click)="deleteCognitiveAssessmentTest(pointIndex)"></i>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+            <div class="form-group col-md-6">
+                <div class="row">
+                    <div class="col-md-1  ">
+                    <label class="md-check">
+                        <input type="checkbox" id="patientTrauma" name="patientTrauma" formControlName="patientTrauma">
+                    </label>
+                    </div>
+                    <div class=" col-md-9">
+                        <label>Performed Trauma Assessment</label>
+                    </div>
+                </div>
+                <div class="row" *ngIf="f.patientTrauma.value == true">
+                    <label class="col-md-6 mt-2 offset-md-1 sub-heading">Identified New Trauma</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" formControlName="patientNewTrauma" placeholder="Patient New Trauma"
+                        style=" border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="row">
+                    <div class="col-md-1  ">
+                    <label class="md-check">
+                        <input type="checkbox" id="patientPainAssessment" name="patientPainAssessment" formControlName="patientPainAssessment">
+                    </label>
+                    </div>
+                    <div class=" col-md-9">
+                        <label>Performed Pain Assessment</label>
+                    </div>
+                </div>
+                <div class="row" *ngIf="f.patientPainAssessment.value == true">
+                    <label class="col-md-6 mt-2 offset-md-1 sub-heading">Identified New Pain</label>
+                    <div class="col-md-5">
+                    <input type="text" class="form-control" formControlName="patientNewPainAssessment" placeholder="Patient New Pain"
+                    style=" border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="col-md-1  ">
+                        <label class="md-check">
+                            <input type="checkbox" id="noGDR" name="noGDR" formControlName="noGDR">
+                        </label>
+                        </div>
+                        <div class=" col-md-9">
+                            <label>No GDR</label>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="f.noGDR.value == true">
+                      <div class=" col-md-8">
+                        <label class="md-check">
+                          <input type="radio" id="patientIsAtBaseline" value="Patient is at Baseline" formControlName="noGDRComment">
+                        </label>&nbsp;
+                        <label class="sub-heading">Patient is at Baseline</label>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="f.noGDR.value == true">
+                      <div class="col-md-8">
+                        <label class="md-check">
+                          <input type="radio" id="patientIsOnNoPsychMeds" value="Patient is on no Psych Meds" formControlName="noGDRComment">
+                        </label>&nbsp;
+                        <label class="sub-heading">Patient is on no Psych Meds</label>
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="col-md-1  ">
+                        <label class="md-check">
+                            <input type="checkbox" id="didGDR" name="didGDR" formControlName="didGDR">
+                        </label>
+                        </div>
+                        <div class=" col-md-9">
+                            <label>Did GDR</label>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="f.didGDR.value == true">
+                      <div class=" col-md-8">
+                        <label class="md-check">
+                          <input type="radio" id="patientIsAtBaseline" value="Patient is at Baseline"
+                            formControlName="didGDRComment">
+                        </label>&nbsp;
+                        <label class="sub-heading">Patient is at Baseline</label>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="f.didGDR.value == true">
+                      <div class="col-md-8">
+                        <label class="md-check">
+                          <input type="radio" id="patientIsOvermedicated" value="Patient can tolerate GDR"
+                            formControlName="didGDRComment">
+                        </label>&nbsp;
+                        <label class="sub-heading">Patient can tolerate GDR</label>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="f.didGDR.value == true">
+                      <div class="col-md-8">
+                        <label class="md-check">
+                          <input type="radio" id="patientIsNowTotalCareAssist" value="Patient is now Total Care Assist"
+                           formControlName="didGDRComment">
+                        </label>&nbsp;
+                        <label class="sub-heading">Patient is Now Total Care Assist</label>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+            <div class="form-group col-md-6">
+                <div class="row">
+                    <div class="col-md-1  ">
+                    <label class="md-check">
+                        <input type="checkbox" id="failedGDR" name="failedGDR" formControlName="failedGDR">
+                    </label>
+                    </div>
+                    <div class=" col-md-5">
+                        <label>Failed GDR</label>
+                    </div>
+                    <div class="col-md-6" *ngIf="f.failedGDR.value == true">
+                      <input type="text" class="form-control" formControlName="failedGDRComment" placeholder="Failed GDR"
+                          style=" border-radius: 5px;">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="row">
+                <div class="col-md-1 mt-2">
+                    <label class="md-check">
+                        <input type="checkbox" id="patientUnstableCheck" name="patientUnstableCheck" formControlName="patientUnstableCheck">
+                    </label>
+                </div>
+                <label class="col-md-5 mt-2">Patient Unstable</label>
+                <div class="col-md-6" *ngIf="f.patientUnstableCheck.value == true">
+                <input type="text" class="form-control" formControlName="patientUnstable" placeholder="Patient Unstable"
+                    style=" border-radius: 5px;">
+                </div>
+                </div>
+                <div class="row" *ngIf="f.patientUnstableCheck.value == true">
+                  <div class="col-md-8">
+                    <label class="md-check">
+                      <input type="radio" id="requireNoMedChanges" value="Requires No Med Changes"
+                        formControlName="patientUnstableMedCheck">
+                    </label>&nbsp;
+                    <label>Requires No Med Changes</label>
+                  </div>
+                </div>
+                <div class="row" *ngIf="f.patientUnstableCheck.value == true">
+                  <div class="col-md-8">
+                    <label class="md-check">
+                      <input type="radio" id="requireMedChanges" value="Require Med Changes"
+                        formControlName="patientUnstableMedCheck">
+                    </label>&nbsp;
+                    <label class="sub-heading">Require Med Changes</label>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <div class="col-md-1  ">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientMedChanges" name="patientMedChanges" formControlName="patientMedChanges">
+                      </label>
+                    </div>
+                    <div class=" col-md-9">
+                      <label>Patient Med Changes</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientOrderedLabsCheck" name="patientOrderedLabsCheck"
+                          formControlName="patientOrderedLabsCheck">
+                      </label>
+                    </div>
+                    <label class="col-md-5">Patient Ordered Labs</label>
+                    <div class="col-md-6" *ngIf="f.patientOrderedLabsCheck.value == true">
+                      <input type="text" class="form-control" formControlName="patientOrderedLabs" placeholder="Patient Ordered Labs"
+                        style=" border-radius: 5px;">
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);" *ngIf="f.patientMedChanges.value == true">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <div class="col-md-3" formArrayName="patientSelectedMedChanges">
+                    <div *ngFor="let medOptions of ff.controls; let i=index;" [formGroupName]="i">
+                      <input type="checkbox" [formControlName]="medChangesOption[i].name">&nbsp;
+                      <label class="sub-heading">{{medChangesOption[i].name}}</label>
+                      <button type="button" *ngIf="medChangesOption[i].name == 'Start' && fff[0].value.Start == true"
+                        class="btn btn-primary btn-sm ml-2" (click)="addStart()"
+                        style="font-size:8px; padding:5px;"><i class="fa fa-plus"
+                          aria-hidden="true"></i></button>
+                      <button type="button" *ngIf="medChangesOption[i].name == 'Increase' && fff[1].value.Increase == true"
+                        class="btn btn-primary btn-sm ml-2" (click)="addIncrease()"
+                        style="font-size:8px; padding:5px;"><i class="fa fa-plus"
+                          aria-hidden="true"></i></button>
+                      <button type="button" *ngIf="medChangesOption[i].name == 'Decrease' && fff[2].value.Decrease == true"
+                        class="btn btn-primary btn-sm ml-2" (click)="addDecrease()"
+                        style="font-size:8px; padding:5px;"><i class="fa fa-plus"
+                          aria-hidden="true"></i></button>
+                      <button type="button" *ngIf="medChangesOption[i].name == 'Stop' && fff[3].value.Stop == true"
+                        class="btn btn-primary btn-sm ml-2" (click)="addStop()"
+                        style="font-size:8px; padding:5px;"><i class="fa fa-plus"
+                          aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row">
+                      <div class="col-md-3" *ngIf="fff[0].value.Start == true">
+                        <div formArrayName="patientSelectedMedChangesStart">
+                          <div *ngFor="let item of medStart.controls; let pointIndex=index" class="row mt-2"
+                            [formGroupName]="pointIndex">
+                            <input type="text" class="form-control col-md-9" formControlName="patientSelectedMedChangesStart"
+                              placeholder="Meds Added">
+                            <i class="fa fa-times-circle col-md-3 mt-2" style="color: red;" aria-hidden="true"
+                              (click)="deleteStart(pointIndex)"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3" *ngIf="fff[1].value.Increase == true">
+                        <div formArrayName="patientSelectedMedChangesIncrease">
+                          <div *ngFor="let item of medIncrease.controls; let pointIndex=index" class="row mt-2"
+                            [formGroupName]="pointIndex">
+                            <input type="text" class="form-control  col-md-9" formControlName="patientSelectedMedChangesIncrease"
+                              placeholder="Meds Increased">
+                            <i class="fa fa-times-circle col-md-3 mt-2" style="color: red;" aria-hidden="true"
+                              (click)="deleteIncrease(pointIndex)"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3" *ngIf="fff[2].value.Decrease == true">
+                        <div formArrayName="patientSelectedMedChangesDecrease">
+                          <div *ngFor="let item of medDecrease.controls; let pointIndex=index" class="row mt-2"
+                            [formGroupName]="pointIndex">
+                            <input type="text" class="form-control  col-md-9" formControlName="patientSelectedMedChangesDecrease"
+                              placeholder="Meds Decrease">
+                            <i class="fa fa-times-circle col-md-3 mt-2" style="color: red;" aria-hidden="true"
+                              (click)="deleteDecrease(pointIndex)"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3" *ngIf="fff[3].value.Stop == true">
+                        <div formArrayName="patientSelectedMedChangesStop">
+                          <div *ngFor="let item of medStop.controls; let pointIndex=index" class="row mt-2"
+                            [formGroupName]="pointIndex">
+                            <input type="text" class="form-control  col-md-9" formControlName="patientSelectedMedChangesStop"
+                              placeholder="Meds Stopped">
+                            <i class="fa fa-times-circle col-md-2 mt-2" style="color: red;" aria-hidden="true"
+                              (click)="deleteStop(pointIndex)"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2"><label class="sub-heading">Continues Med</label></div>
+              <div class="col-md-4 mb-2">
+                <select class="form-control" formControlName="patientMedChangesCount" id="patientMedChangesCount"
+                  (change)="updateSelect($event.target.value,'patientMedChangesCount')">
+                  <option *ngFor="let c of medCount" value={{c}}>
+                    {{c}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1  ">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientPsychologicalTesting" name="patientPsychologicalTesting"
+                          formControlName="patientPsychologicalTesting">
+                      </label>
+                    </div>
+                    <div class=" col-md-10">
+                      <label>Perform Psychological Testing</label>&nbsp;
+                      <button type="button" class="btn btn-primary btn-sm" *ngIf="f.patientPsychologicalTesting.value == true"
+                        (click)="addPsychologicalTesting()" style="font-size:8px; padding:5px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="f.patientPsychologicalTesting.value == true">
+                    <div class="row">
+                      <div class="col-md-5 offset-md-1" formArrayName="patientPsychologicalTestingName">
+                        <div *ngFor="let item of PsychologicalTestingName.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                          <select class="form-control" formControlName="patientPsychologicalTestingName"
+                            id="patientPsychologicalTestingName"
+                            (change)="updateSelect($event.target.value,'patientPsychologicalTestingName')">
+                            <option *ngFor="let test of psychologicalTest" value={{test}}>
+                              {{test}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4" formArrayName="patientPsychologicalTestingScore">
+                        <div *ngFor="let item of PsychologicalTestingScore.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                          <div class="row">
+                            <input type="text" class="col-md-8 form-control" formControlName="patientPsychologicalTestingScore"
+                              placeholder="Test Score" style=" border-radius: 5px;">
+                            <i class="col-md-4 fa fa-times-circle mt-2" style="color: red;" aria-hidden="true"
+                              (click)="deletePsychologicalTesting(pointIndex)"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientCorrectedDDXCheck" name="patientCorrectedDDXCheck"
+                          formControlName="patientCorrectedDDXCheck">
+                      </label>
+                    </div>
+                    <label class="col-md-5">Corrected DX</label>
+                    <div class="col-md-6" *ngIf="f.patientCorrectedDDXCheck.value == true">
+                      <input type="text" class="form-control" formControlName="patientCorrectedDDX" placeholder="Corrected Dx"
+                        style=" border-radius: 5px;">
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientReferToCheck" name="patientReferToCheck"
+                          formControlName="patientReferToCheck">
+                      </label>
+                    </div>
+                    <label class="col-md-5">Referred Patient To</label>
+                    <div class="col-md-6" *ngIf="f.patientReferToCheck.value == true">
+                      <input type="text" class="form-control" formControlName="patientReferTo" placeholder="Refer Pt. to"
+                        style=" border-radius: 5px;">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <label class="md-check">
+                        <input type="checkbox" id="patientPriorAuthCheck" name="patientPriorAuthCheck"
+                          formControlName="patientPriorAuthCheck">
+                      </label>
+                    </div>
+                    <label class="col-md-5">Initiated Prior Auth</label>
+                    <div class="col-md-6" *ngIf="f.patientPriorAuthCheck.value == true">
+                      <select class="form-control" formControlName="patientPriorAuth" id="patientPriorAuth"
+                        (change)="updateSelect($event.target.value,'patientPriorAuth')">
+                        <option *ngFor="let med of meds" value={{med}}>
+                          {{med}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+              <div class="form-group col-md-6">
+                <div class="row">
+                  <div class="col-md-1  ">
+                    <label class="md-check">
+                      <input type="checkbox" id="patientAssessedCapacity" name="patientAssessedCapacity"
+                        formControlName="patientAssessedCapacity">
+                    </label>
+                  </div>
+                  <div class=" col-md-5">
+                    <label>Assessed Medical decision making Capacity</label>
+                  </div>
+                  <div class="col-md-6" *ngIf="f.patientAssessedCapacity.value == true">
+                    <input type="text" class="form-control" formControlName="patientAssessedCapacityComment" placeholder="Comment"
+                      style=" border-radius: 5px;">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="row">
+                  <div class="col-md-1  ">
+                    <label class="md-check">
+                      <input type="checkbox" id="patientDischargedPT" name="patientDischargedPT"
+                        formControlName="patientDischargedPT">
+                    </label>
+                  </div>
+                  <div class=" col-md-5">
+                    <label>Patient Discharged</label>
+                  </div>
+                  <div class="col-md-6" *ngIf="f.patientDischargedPT.value == true">
+                    <input type="text" class="form-control" formControlName="patientDischargedComment" placeholder="comment"
+                      style=" border-radius: 5px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-1  ">
+                      <label class="md-check">
+                        <input type="checkbox" id="initiatedBakerAct" name="initiatedBakerAct" formControlName="initiatedBakerAct">
+                      </label>
+                    </div>
+                    <div class=" col-md-9">
+                      <label>Initiated Baker Act</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="md-check">
+                        <input type="checkbox" id="sitter1to1" formControlName="sitter1to1">
+                      </label>&nbsp;&nbsp;
+                      <label class="sub-heading">1:1 sitter</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class=" col-md-6" *ngIf="f.sitter1to1.value == true">
+                      <label class="md-check">
+                        <input type="radio" id="started1to1Sitter" value="started" formControlName="startedOrRemoved1to1Sitter">
+                      </label>&nbsp;
+                      <label>Started</label>
+                    </div>
+                    <div class="col-md-6" *ngIf="f.sitter1to1.value == true">
+                      <label class="md-check">
+                        <input type="radio" id="removed1to1Sitter" value="removed" formControlName="startedOrRemoved1to1Sitter">
+                      </label>&nbsp;
+                      <label>Removed</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+              <div class="form-group col-md-6">
+                <div class="row">
+                  <div class="col-md-1  ">
+                    <label class="md-check">
+                      <input type="checkbox" id="patientpsychotherapy" name="patientpsychotherapy"
+                        formControlName="patientpsychotherapy">
+                    </label>
+                  </div>
+                  <div class=" col-md-9">
+                    <label>Did Psychotherapy</label>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group col-md-6">
+                  <div class="row">
+                      <div class="col-md-1">
+                      <label class="md-check">
+                          <input type="radio" id="removed1to1Sitter" value="removed1to1Sitter" formControlName="startedOrRemoved1to1Sitter">
+                      </label>
+                      </div>
+                      <div class=" col-md-9">
+                          <label>Removed 1:1 Sitter</label>
+                      </div>
+                  </div>
+              </div> -->
+            </div>
+            <a *ngIf="selectedPatient.document != undefined && selectedPatient.document.uploadFilePath != undefined" download="" target="_blank" href="{{apiUrl}}/ab/{{selectedPatient.document.uploadFilePath}}">View Attached Document {{selectedPatient.document.uploadFilePath}}</a>
+            <div class="row mt-2" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                <div class="form-group col-md-2">
+                    <label>Attach Note</label>
+                </div>
+                <div class="form-group col-md-6">
+                    <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
+                </div>
+                <div class="form-group col-md-4">
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" class="btn btn-custom add">Update</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+      <p style="color: white"> </p>
+      </ngx-spinner>
+</div>

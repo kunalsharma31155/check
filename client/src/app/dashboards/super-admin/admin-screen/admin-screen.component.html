@@ -1,0 +1,62 @@
+<app-super-admin>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-md-4 offset-md-4">
+                <div class="boxa">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="../../../../../assets/img/logo.png" alt="Dr Desh" class="logo-img mt-3">
+                        </div>
+                        <div class="col-md-8" class="logo-text">
+                            <h4>Admin Panel</h4>
+                            <p>Add Users Facility Patients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-3" *ngIf="permission?.createOtherUser == true">
+                <div class="boxb" routerLink="/dashboard/users-list">
+                    <div class="col-md-4">
+                        <i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>User Management</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="permission?.createFacility == true">
+                <div class="boxb" routerLink="/dashboard/facility-list">
+                    <div class="col-md-4">
+                        <i class="fa fa-hospital-o fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Facility Management</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="permission?.createPatient == true">
+                <div class="boxb" routerLink="/dashboard/patient-list">
+                    <div class="col-md-4">
+                        <i class="fa fa-thermometer-full fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Patient Management</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" *ngIf="permission?.createProvider == true">
+                <div class="boxb" routerLink="/dashboard/providers-list">
+                    <div class="col-md-4">
+                        <i class="fa fa-user-md fa-4x" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>Provider Management</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-super-admin>

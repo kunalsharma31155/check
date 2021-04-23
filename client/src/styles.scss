@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+.myCustomModalClass .modal-dialog {
+  max-width: 80vw;
+}
+
+.myCustomModalFullClass .modal-dialog {
+  max-width: 99vw;
+  font-size: calc(0.3em + 0.3vw);
+}
+@media screen and (min-width: 1500px) {
+  .myCustomModalFullClass .modal-dialog {
+    max-width: 99vw;
+    font-size: calc(0.4em + 0.4vw);
+  }
+}
+@media screen and (min-width: 1800px) {
+  .myCustomModalFullClass .modal-dialog {
+    max-width: 99vw;
+    font-size: calc(0.5em + 0.4vw);
+  }
+}
+@media screen and (min-width: 2260px) {
+  .myCustomModalFullClass .modal-dialog {
+    max-width: 99vw;
+    font-size: calc(0.6em + 0.5vw);
+  }
+}

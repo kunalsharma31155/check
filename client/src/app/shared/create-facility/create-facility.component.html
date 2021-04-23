@@ -1,0 +1,160 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedFacility == undefined">Add New Facility</h2>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedFacility != undefined">Update Facility Details</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="facilityForm" (ngSubmit)="submitForm()">
+            <div class="form-group">
+                <input type="text" [readonly]="selectedFacility != undefined" class="form-control" formControlName="facilityName" [ngClass]="{ 'is-invalid': formSubmitted && f.facilityName.errors }" placeholder="Facility Name">
+                <div *ngIf="formSubmitted && f.facilityName.errors" class="invalid-feedback">
+                    <div *ngIf="f.facilityName.errors.required">Facility Name is required</div>
+                </div>
+            </div>
+            <div class="form-group" >
+                <input type="text" class="form-control" formControlName="facilityShortName" [ngClass]="{ 'is-invalid': formSubmitted && f.facilityShortName.errors }" placeholder="Facility Short Name">
+                <div *ngIf="formSubmitted && f.facilityShortName.errors" class="invalid-feedback">
+                    <div *ngIf="f.facilityShortName.errors.required">Facility Short Name is required</div>
+                </div>
+            </div>
+            <div formGroupName="address">
+                <div class="form-group ticket-fields">
+                    <input type="text" class="form-control " formControlName="line1" placeholder="Address Line 1"
+                    [ngClass]="{ 'is-invalid': formSubmitted && ff.line1.errors }">
+                    <div *ngIf="formSubmitted && ff.line1.errors" class="invalid-feedback">
+                        <div *ngIf="ff.line1.errors.required">Address Line 1 is required</div>
+                    </div>
+                </div>
+                <div class="form-group ticket-fields">
+                    <input type="text" class="form-control " formControlName="line2" placeholder="Address Line 2"
+                    [ngClass]="{ 'is-invalid': formSubmitted && ff.line2.errors }">
+                    <div *ngIf="formSubmitted && ff.line2.errors" class="invalid-feedback">
+                        <div *ngIf="ff.line2.errors.required">Address Line 2 is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <input type="text" class="form-control" formControlName="city" placeholder="City"
+                        [ngClass]="{ 'is-invalid': formSubmitted && ff.city.errors }">
+                        <div *ngIf="formSubmitted && ff.city.errors" class="invalid-feedback">
+                            <div *ngIf="ff.city.errors.required">City name is required</div>
+                        </div>
+                </div>
+
+                <div class="row">
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" formControlName="state" placeholder="State"
+                        [ngClass]="{ 'is-invalid': formSubmitted && ff.state.errors }">
+                        <div *ngIf="formSubmitted && ff.state.errors" class="invalid-feedback">
+                            <div *ngIf="ff.state.errors.required">State name is required</div>
+                        </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text" class="form-control" formControlName="zipCode" placeholder="Zip Code"
+                        [ngClass]="{ 'is-invalid': formSubmitted && ff.zipCode.errors }">
+                        <div *ngIf="formSubmitted && ff.zipCode.errors" class="invalid-feedback">
+                            <div *ngIf="ff.zipCode.errors.required">Zip Code is required</div>
+                        </div>
+                </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-1  ">
+                    <label class="md-check">
+                        <input type="checkbox" id="partOfCorporate" name="partOfCorporate" formControlName="partOfCorporate">
+                    </label>
+                    </div>
+                    <div class=" col-md-9">
+                        <label>Is a Part Of Corporate ?</label>
+                    </div>
+                </div>
+                <div *ngIf="f.partOfCorporate.value == true || f.partOfCorporate.value == 'true'">
+                    <div class="form-group">
+                        <label for="nameOfCorporate">Name Of Corporate</label>
+                        <select class="form-control" formControlName="nameOfCorporate" id="nameOfCorporate" (change)="updateRole($event.target.value)">
+                            <option *ngFor="let corporate of corporates" value='{{corporate.firstName}} {{corporate.lastName}}'>
+                                {{corporate.firstName}} {{corporate.lastName}}
+                            </option>
+                        </select>
+                        <div *ngIf="formSubmitted && f.nameOfCorporate.errors && f.partOfCorporate.value == true" style="color: red;">
+                            <div *ngIf="f.nameOfCorporate.errors.required && f.partOfCorporate.value == true">Name Of Corporate is required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" >
+                <input type="text" [readonly]="selectedFacility != undefined" class="form-control" formControlName="facilityEmail" [ngClass]="{ 'is-invalid': formSubmitted && f.facilityEmail.errors }" placeholder="Facility Email">
+                <div *ngIf="formSubmitted && f.facilityEmail.errors" class="invalid-feedback">
+                    <!-- <div *ngIf="f.facilityEmail.errors.required">Facility Email is required</div> -->
+                </div>
+            </div>
+            <div class="form-group" >
+                <input type="text" [readonly]="selectedFacility != undefined" class="form-control" formControlName="facilityLoginId" [ngClass]="{ 'is-invalid': formSubmitted && f.facilityLoginId.errors }" placeholder="Facility LoginId">
+                <div *ngIf="formSubmitted && f.facilityLoginId.errors" class="invalid-feedback">
+                    <div *ngIf="f.facilityLoginId.errors.required">Facility LoginId required</div>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="selectedFacility == undefined">
+                <div class="row">
+                    <div class="col-md-11">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control password-type"
+                        style="border-right:none;"
+                        formControlName="password" [ngClass]="{ 'is-invalid': formSubmitted && f.password.errors }" placeholder="Password">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="password-type bg-transparent" (click)="togglePassword()"
+                        style="float: right; padding : 6px 12px; border: 1px solid #ced4da;
+                        border-left: none; border-radius: 0.25rem; outline:none;">
+                            <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div *ngIf="formSubmitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div *ngIf="f.password.errors.pattern">Enter Strong Password</div>
+                </div>
+            </div>
+            <div class="form-group" *ngIf="selectedFacility == undefined">
+              <div class="row">
+                <div class="col-md-11">
+                  <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control password-type" formControlName="confirmPassword"
+                [ngClass]="{ 'is-invalid': formSubmitted && f.confirmPassword.errors }" placeholder="Confirm Password">
+                </div>
+                <div class="col-md-1">
+                  <button type="button" class="password-type bg-transparent" (click)="toggleConfirmPassword()"
+                        style="float: right; padding : 6px 12px; border: 1px solid #ced4da;
+                        border-left: none; border-radius: 0.25rem; outline:none;">
+                            <i [class]="showConfirmPassword ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                        </button>
+                </div>
+              </div>
+
+                <div *ngIf="formSubmitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors.mustMatch">Password and Confirm Password must match with each other.</div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="selectedFacility != undefined">
+                <label class="topMargin">Active</label>
+                <div class="onoffswitch">
+                    <input type="checkbox" class="onoffswitch-checkbox form-control1 positionForSwitch" formControlName="activeStatus" id="myonoffswitch" tabindex="0" >
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between" *ngIf="selectedFacility == undefined">
+                <button type="submit" class="btn btn-custom add">Add Facility</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between" *ngIf="selectedFacility != undefined">
+                <button type="submit" class="btn btn-custom add">Update</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

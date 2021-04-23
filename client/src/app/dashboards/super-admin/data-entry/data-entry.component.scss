@@ -1,0 +1,19 @@
+@import "../../../app.component.scss";
+
+.title{
+  color: $main-font-color;
+  font-weight: 700;
+}
+.btn-outline-custom{
+  border: 1px solid $main-font-color;
+  font-weight: 600;
+  color: $main-font-color;
+  width: 100%;
+  cursor: pointer;
+}
+.btn-outline-custom:hover{
+  background-color: $main-font-color;
+  border: 1px solid $main-font-color;
+  border: none;
+  color: $main-bg-color;
+}

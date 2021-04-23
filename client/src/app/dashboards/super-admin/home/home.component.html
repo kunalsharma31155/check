@@ -1,0 +1,3141 @@
+<app-super-admin>
+    <div class="container-fluid">
+      <div class="row mt-5 ml-1">
+        <h3 class="heading">BALANCED WELLBEING</h3>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4" *ngIf="permission?.admin == true">
+          <div class="boxb1"  routerLink="/dashboard/admin">
+            <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i><br>
+            <h3>ADMIN</h3>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="permission?.dataentry == true">
+          <div class="boxb2" routerLink="/dashboard/data-entry">
+            <i class="fa fa-database fa-2x" aria-hidden="true"></i>
+            <h3>DATA-ENTRY</h3>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="permission?.reports == true">
+          <div class="boxb3" routerLink="/dashboard/reports">
+            <i class="fa fa-file-text fa-2x" aria-hidden="true"></i>
+            <h3>REPORTS</h3>
+          </div>
+        </div>
+        <!-- <div class="col-md-3">
+          <div class="boxb4" routerLink="/dashboard/super-admin/">
+            <i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
+            <h3>DASHBOARD</h3>
+          </div>
+        </div> -->
+      </div>
+      <div class="row mt-5">
+        <div class="col-md-12">
+          <div class="boxa">
+            <div class="head">
+              <label><i class="fa fa-bar-chart ml-2 mr-2" aria-hidden="true"></i>FACILITY DASHBOARD</label>
+            </div>
+            <div class="row mt-3 mb-4">
+              <div class="col-md-3">
+                <h3 class="big-text">{{totalPatients}}%</h3><div class="small-text">Patients</div>
+                <div class="progress-bar">
+                  <div class="fill-progress-bar" style="background-color:rgb(217, 71, 74);" [style.width.%]="totalPatients">{{totalPatients}}%</div>
+                </div>
+              </div>
+              <div class="col-md-3 ">
+                <h3 class="big-text">{{totalFacility}}%</h3><div class="small-text">Facility</div>
+                <div class="progress-bar">
+                  <div class="fill-progress-bar" style="background-color:rgb(142, 185, 80);" [style.width.%]="totalFacility">{{totalFacility}}%</div>
+                </div>
+              </div>
+              <div class="col-md-3 ">
+                <h3 class="big-text">{{totalProvider}}%</h3><div class="small-text">Provider</div>
+                <div class="progress-bar">
+                  <div class="fill-progress-bar" style="background-color:rgb(40,79,126);" [style.width.%]="totalProvider">{{totalProvider}}%</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <h3 class="big-text">63%</h3><div class="small-text">Patients</div>
+                <div class="progress-bar">
+                  <div class="fill-progress-bar" style="background-color:rgb(216, 106, 41); width: 76%;">c</div>
+                </div>
+              </div>
+            </div>
+            <div style="border-bottom: 1px solid rgba(211,211,211,0.3);"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <ng-template #content1 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Set User Access</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+          <ngb-tabset [destroyOnHide]="false" [activeId]="activeTab" (tabChange)="showActiveTabId($event.nextId)">
+
+            <ngb-tab title="Admin" id="2">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Admin Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-3">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <div class="row">
+                              <div class="col-md-1  ">
+                                <label class="md-check">
+                                  <input type="checkbox" id="patientReport" name="patientReport" formControlName="patientReport">
+                                </label>
+                              </div>
+                              <div class=" col-md-9">
+                                <label>Patient Report</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Data Entery" id="3">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Data-Entry Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Provider" id="4">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Provider Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Non-Clinical Employee" id="5">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Non-Clinical Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Medical Assistant" id="6">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Medical Assistant Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Power Of Attorny" id="7">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Power Of Attorny Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Facility" id="8">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Facility Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Facility-Corporate" id="9">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Facility-Corporate Privileges</h3>
+                <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Admin Side Bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Data Entry Side bar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Reports</label>
+                          </div>
+                      </div>
+                  </div>
+                    </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Super Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <div class="row">
+                          <div class="col-md-1  ">
+                          <label class="md-check">
+                              <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                          </label>
+                          </div>
+                          <div class=" col-md-9">
+                              <label>Create Admin</label>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Other User</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Facility</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Patient</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Provider</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Patient Data-Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Post-Rounding Data Entry</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Psychottropic No.</label>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Brief Provider Performance Report Detail</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Admin Prior Auth Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Post Rounding Report</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Psychotropic number report </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility/Billing Company Patient Notes reports </label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Snap-Shot reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Practice Performance Report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Patient/Power of Attorney Report</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Billing company missing documents reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                              <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                </form>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Billing Company" id="10">
+              <ng-template ngbTabContent>
+                <h3 class="mt-4 ml-5 mb-3">Billing Company Privileges</h3>
+                  <form [formGroup]="form" (submit)="submitForm()" class="form-horizontal">
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-4">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="admin" name="admin" formControlName="admin" >
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Admin Side Bar</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="dataentry" name="dataentry" formControlName="dataentry">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Data Entry Side bar</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="reports" name="reports" formControlName="reports">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Reports</label>
+                            </div>
+                        </div>
+                    </div>
+                      </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createSuperAdmin" name="createSuperAdmin" formControlName="createSuperAdmin" >
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Super Admin</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <div class="col-md-1  ">
+                            <label class="md-check">
+                                <input type="checkbox" id="createAdmin" name="createAdmin" formControlName="createAdmin">
+                            </label>
+                            </div>
+                            <div class=" col-md-9">
+                                <label>Create Admin</label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createOtherUser" name="createOtherUser" formControlName="createOtherUser" >
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Other User</label>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                          <div class="row">
+                              <div class="col-md-1  ">
+                              <label class="md-check">
+                                  <input type="checkbox" id="createFacility" name="createFacility" formControlName="createFacility">
+                              </label>
+                              </div>
+                              <div class=" col-md-9">
+                                  <label>Create Facility</label>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                      <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="createPatient" name="createPatient" formControlName="createPatient">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Create Patient</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="createProvider" name="createProvider" formControlName="createProvider">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Create Provider</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <h3 class="mt-4 ml-5 mb-3">Data Entry Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="patientDataEntry" name="patientDataEntry" formControlName="patientDataEntry" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Patient Data-Entry</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-6">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="postRoundingDataEntry" name="postRoundingDataEntry" formControlName="postRoundingDataEntry">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Post-Rounding Data Entry</label>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="facilityPsychotorpicNo" name="facilityPsychotorpicNo" formControlName="facilityPsychotorpicNo" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Facility Psychottropic No.</label>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <h3 class="mt-4 ml-5 mb-3">Reports Privileges</h3>
+                        <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="providerReport" name="providerReport" formControlName="providerReport" >
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Provider Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                              <div class="row">
+                                  <div class="col-md-1  ">
+                                  <label class="md-check">
+                                      <input type="checkbox" id="facilityReport" name="facilityReport" formControlName="facilityReport">
+                                  </label>
+                                  </div>
+                                  <div class=" col-md-9">
+                                      <label>Facility Report</label>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <div class="row">
+                                <div class="col-md-1  ">
+                                <label class="md-check">
+                                    <input type="checkbox" id="adminReport" name="adminReport" formControlName="adminReport">
+                                </label>
+                                </div>
+                                <div class=" col-md-9">
+                                    <label>Admin Report</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                          <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="providerPerformanceReportDetail" name="providerPerformanceReportDetail" formControlName="providerPerformanceReportDetail" >
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Provider Performance Report Detail</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="row">
+                                    <div class="col-md-1  ">
+                                    <label class="md-check">
+                                        <input type="checkbox" id="briefProviderPerformanceReportDetail" name="briefProviderPerformanceReportDetail" formControlName="briefProviderPerformanceReportDetail">
+                                    </label>
+                                    </div>
+                                    <div class=" col-md-9">
+                                        <label>Brief Provider Performance Report Detail</label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="adminPriorAuthReport" name="adminPriorAuthReport" formControlName="adminPriorAuthReport" >
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Admin Prior Auth Report</label>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <div class="row">
+                                      <div class="col-md-1  ">
+                                      <label class="md-check">
+                                          <input type="checkbox" id="facilityPostRoundingReport" name="facilityPostRoundingReport" formControlName="facilityPostRoundingReport">
+                                      </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                          <label>Facility Post Rounding Report</label>
+                                      </div>
+                                  </div>
+                              </div>
+                              </div>
+                              <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="facilityPsychotropicNumberReport" name="facilityPsychotropicNumberReport" formControlName="facilityPsychotropicNumberReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility Psychotropic number report </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-1  ">
+                                        <label class="md-check">
+                                            <input type="checkbox" id="billingCompanyPatientNotesReport" name="billingCompanyPatientNotesReport" formControlName="billingCompanyPatientNotesReport">
+                                        </label>
+                                        </div>
+                                        <div class=" col-md-9">
+                                            <label>Facility/Billing Company Patient Notes reports </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                  <div class="form-group col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-1  ">
+                                          <label class="md-check">
+                                              <input type="checkbox" id="facilitySnapSHotReport" name="facilitySnapSHotReport" formControlName="facilitySnapSHotReport">
+                                          </label>
+                                          </div>
+                                          <div class=" col-md-9">
+                                              <label>Facility Snap-Shot reports </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-1  ">
+                                          <label class="md-check">
+                                              <input type="checkbox" id="facilityPracticePerformanceReport" name="facilityPracticePerformanceReport" formControlName="facilityPracticePerformanceReport">
+                                          </label>
+                                          </div>
+                                          <div class=" col-md-9">
+                                              <label>Facility Practice Performance Report </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                  <div class="form-group col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-1  ">
+                                          <label class="md-check">
+                                              <input type="checkbox" id="powerOfAttorneyReport" name="powerOfAttorneyReport" formControlName="powerOfAttorneyReport">
+                                          </label>
+                                          </div>
+                                          <div class=" col-md-9">
+                                              <label>Patient/Power of Attorney Report</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                      <div class="row">
+                                          <div class="col-md-1  ">
+                                          <label class="md-check">
+                                              <input type="checkbox" id="billingCompanyMissingDocumentsReport" name="billingCompanyMissingDocumentsReport" formControlName="billingCompanyMissingDocumentsReport">
+                                          </label>
+                                          </div>
+                                          <div class=" col-md-9">
+                                              <label>Billing company missing documents reports </label>
+                                          </div>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="row" style="border-bottom: 1px solid rgba(173,216,230,0.2);">
+                                  <div class="form-group col-md-6">
+                                    <div class="row">
+                                      <div class="col-md-1  ">
+                                        <label class="md-check">
+                                          <input type="checkbox" id="facilityDetailedGDRReport" name="facilityDetailedGDRReport"
+                                            formControlName="facilityDetailedGDRReport">
+                                        </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                        <label>Facility Detailed GDR Report</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <div class="row">
+                                      <div class="col-md-1  ">
+                                        <label class="md-check">
+                                          <input type="checkbox" id="patientSummaryReport" name="patientSummaryReport"
+                                            formControlName="patientSummaryReport">
+                                        </label>
+                                      </div>
+                                      <div class=" col-md-9">
+                                        <label>Patient Summary Report</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <button class="btn btn-primary mt-3 ml-5"type="submit">Save</button>
+                  </form>
+              </ng-template>
+            </ngb-tab>
+
+          </ngb-tabset>
+
+        </div>
+        <div class="modal-footer">
+        </div>
+    </ng-template>
+</app-super-admin>

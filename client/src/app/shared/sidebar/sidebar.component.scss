@@ -1,0 +1,166 @@
+
+@import "../../app.component.scss";
+
+.topbar{
+    background-color: $main-font-color;
+    .togglebutton{
+        background-color: $main-font-color;
+        color: $main-bg-color;
+        border: none;
+    }
+    .navbar-nav .rightsideicon{
+        color: $main-bg-color;
+    }
+}
+
+#sidebar{
+    min-width: 200px;
+    max-width: 200px;
+    height: 100%;
+    position: fixed;
+    transition: 1.0s;
+    padding-top: 60px;
+    background-color: $main-bg-color;
+    .navbar-nav{
+        text-align: center;
+        .nav-link{
+            color : $main-font-color;
+            font-weight: 600;
+            outline: none;
+        }
+        .userrole{
+            color:$main-font-color;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .userrole-hidden{
+            display: none;
+        }
+        .main-user-icon{
+            color: $main-font-color;
+        }
+    }
+    .nav-item{
+        cursor: pointer;
+        font-size: 20px;
+        display: inline-flex;
+    }
+    .nav-item:hover{
+        background-color: $main-font-color;
+        .nav-link{
+            color: $main-bg-color;
+        }
+        .customIcon i{
+            color: $main-bg-color;
+        }
+    }
+    .customIcon i{
+        color: $main-font-color;
+    }
+}
+
+#content{
+    width: calc(100% - 200px);
+    margin-left: 200px;
+    transition: 1.0s;
+    padding: 20px;
+    padding-top: 65px;
+}
+#content.hidden{
+    width: calc(100% - 63px);
+    margin-left: 63px;
+}
+#sidebar.hidden{
+    margin-left: -137px;
+    .main-user-icon{
+        margin-right: 5px;
+    }
+    .nav-link{
+        display: none;
+    }
+    .customIcon{
+        margin-left: auto;
+    }
+    .role-image{
+        margin-left: auto;
+    }
+    .nav-item{
+        padding-top: 15px;
+        padding-right: 18px;
+        font-size: 18px;
+    }
+    .userrole{
+        display: none;
+    }
+    #u-hidden{
+        display: block;
+        float: right;
+        margin-right: 18px;
+        color:$main-font-color;
+
+    }
+}
+.nav-link[data-toggle="collapse"] {
+    position: relative;
+}
+
+
+.navbar{
+    .navbar-toggle{
+        outline: none;
+    }
+    border: none;
+    min-height: 60px;
+    max-height: 60px;
+
+    .logo-img{
+        padding-top: 0px;
+        width: 2%;
+        margin-right: 15px;
+    }
+    .logoName{
+        font-weight: 700;
+        color: white;
+        letter-spacing: 1.4px;
+        font-size: 1.7rem;
+    }
+    .menu-items{
+        margin-right: 40px;
+        padding-top: 10px;
+        width: 15%;
+
+        p{
+            margin-left: 130px;
+        }
+
+        .dropdown-menu{
+            position: absolute;
+            margin-left: 10%;
+        }
+    }
+}
+
+.myprofile{
+    cursor: pointer;
+}
+
+@media (max-width: 575px) {
+    #sidebar {
+        margin-left: 0px;
+    }
+    #sidebar.hidden {
+        margin-left: -200px;
+    }
+    .navbar{
+        .menu-items{
+            p{
+                margin-left: 0px;
+            }
+        }
+    }
+    #content{
+        width:100%;
+        padding: 20px;
+        padding-top: 60px;
+    }
+}

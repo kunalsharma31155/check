@@ -1,0 +1,177 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedPatient == undefined">Add New Patient</h2>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedPatient != undefined">Update Patient Details</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="patientForm" (ngSubmit)="submitForm()">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                    <input type="text" [readonly]="selectedPatient !=undefined" class="form-control" formControlName="firstName" [ngClass]="{ 'is-invalid': formSubmitted && f.firstName.errors }" placeholder="First Name">
+                    <div *ngIf="formSubmitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                    <input type="text" [readonly]="selectedPatient !=undefined" class="form-control" formControlName="lastName" [ngClass]="{ 'is-invalid': formSubmitted && f.lastName.errors }" placeholder="Last Name">
+                    <div *ngIf="formSubmitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group" *ngIf="selectedPatient ==undefined">
+                    <input class="form-control" (change)="validateDOB(dob)" type="date" name="patientDOB" formControlName="patientDOB" placeholder="DOB">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                    <label for="assignFacility">Assign Facility</label>
+                    <select class="form-control" formControlName="patientFacility" id="patientFacility" (change)="updatePatientFacility($event.target.value)">
+                        <option *ngFor="let facility of facilitys" value={{facility.facilityName}}>
+                            {{facility.facilityName}}
+                        </option>
+                    </select>
+                    <div *ngIf="formSubmitted && f.patientFacility.errors" class="invalid-feedback">
+                        <div *ngIf="f.patientFacility.errors.required">Patient Facility is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+                    <label for="assignProvider">Assign Provider</label>
+                    <select class="form-control" formControlName="patientProvider" id="patientProvider" (change)="updatePatientProvider($event.target.value)">
+                        <option *ngFor="let provider of providers" value={{provider.firstName}}>
+                            {{provider.firstName}}
+                        </option>
+                    </select>
+                    <div *ngIf="formSubmitted && f.patientProvider.errors" class="invalid-feedback">
+                        <div *ngIf="f.patientProvider.errors.required">Patient Provider is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 form-group" *ngIf="selectedPatient != undefined">
+                    <input type="text" class="form-control" formControlName="powerOfAttorneyUserId"  placeholder="Power Of Attorney LoginId">
+                    <!-- <div *ngIf="formSubmitted && f.powerOfAttorneyUserId.errors" class="invalid-feedback">
+                        <div *ngIf="f.powerOfAttorneyUserId.errors.required">Power Of Attorney LoginId is required</div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="row" *ngIf="uploadFiles.length > 0">
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label>Document Name</label>
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <label>View File</label>
+                </div>
+            </div>
+            <div class="row" *ngFor="let uploadFile of uploadFiles; let i = index;">
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                        <input type="text" [readonly]="true" class="form-control" value="{{uploadFile[0] != undefined ? uploadFile[0].documentName: uploadFile.documentName}}">
+                </div>
+                <div class="form-group col-sm-6 col-md-6 col-lg-6">
+                    <a href="{{apiUrl}}/ab/{{selectedPatient.documents[i].uploadFilePath}}"  target="_blank" download>view</a>
+                </div>
+            </div>
+            <div *ngIf="documentArray != undefined && documentTypes.length > 0">
+                <div *ngFor="let group of documentArray.controls; let i = index;" formArrayName="documents">
+                    <div class="row" [formGroupName]='i'>
+                        <div class="col-sm-5 col-md-5 col-lg-5">
+                            <div class="form-group">
+                                <label>Document Type</label>
+                                <!-- <input type="text" class="form-control" [(ngModel)]="receipt.street" name="receiptfor_{{receipt.id}}"/> -->
+                                <select class="form-control" formControlName="fileName">
+                                    <option value="" disabled selected>Select Document</option>
+                                    <option *ngFor="let documentType of documentTypes" value={{documentType._id}}>{{documentType.documentName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 col-md-7 col-lg-7" *ngIf="group.value.image == undefined && group.value.fileName">
+                            <div class="form-group">
+                                <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
+                                <!-- <div class="invalid-feedback" style="display: block">
+                                  <ng-container *ngIf="hasError('image', 'required')">This field is required</ng-container>
+                                  <ng-container *ngIf="hasError('image', 'requiredFileType')">Only PNG 🤡</ng-container>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-3 col-md-3 col-lg-3">
+
+                        </div> -->
+                        <div class="col-sm-3 col-md-3 col-lg-3" *ngIf="group.value.image != undefined">
+                            <!-- <button type="button"  class="btn btn-primary float-right" (click)="removeDocument()">Remove</button> -->
+                            <div class="form-group">
+                                <label>File Name</label>
+                                <div >
+                                    {{group.value.image.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3" *ngIf="group.value.image != undefined">
+                            <div class="form-group">
+                                <label>    </label>
+                                <div>
+                                    <button type="button"  class="btn btn-danger float-right" (click)="removeDocument(i)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <button type="button" *ngIf="documentArray.controls.length == i+1" class="btn btn-custom add" (click)="addDocument()">Add Document</button>
+                        </div>
+                        <!-- <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="documentArray.controls.length > 1">
+                            <button type="button"  class="btn btn-danger float-right" (click)="removeDocument(i)">Remove</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="selectedPatient != undefined">
+                    <label class="topMargin">Active</label>
+                    <div class="onoffswitch">
+                        <input type="checkbox" class="onoffswitch-checkbox form-control1 positionForSwitch" formControlName="activeStatus" id="myonoffswitch" tabindex="0" >
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div> -->
+                <div class="col-sm-12 col-md-12 col-lg-12" *ngIf="selectedPatient != undefined">
+                  <!-- <div class="onoffswitch"> -->
+                    <input type="checkbox" formControlName="activeStatus"
+                      id="myonoffswitch" tabindex="0"> &nbsp;
+                      <label class="topMargin">Patient is in Facility ?</label>
+                    <!-- <label class="onoffswitch-label" for="myonoffswitch">
+                      <span class="onoffswitch-inner"></span>
+                      <span class="onoffswitch-switch"></span>
+                    </label> -->
+                  <!-- </div> -->
+                </div>
+                <div class="col-md-12 form-group" *ngIf="selectedPatient != undefined && f.activeStatus.value ==  false ">
+                    <label for="assignProvider">Reason For Discharge</label>
+                    <select class="form-control" formControlName="dischargeReason" id="dischargeReason"
+                      (change)="updateDischargeReason($event.target.value)">
+                      <option *ngFor="let reason of reasons" value={{reason}}>
+                        {{reason}}
+                      </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <button type="submit" *ngIf="selectedPatient == undefined" class="btn btn-custom add">Add Patient</button>
+                    <button type="submit" *ngIf="selectedPatient != undefined" class="btn btn-custom add">Update</button>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <button type="button" class="btn btn-danger float-right" (click)="activeModal.dismiss('Cross click')">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

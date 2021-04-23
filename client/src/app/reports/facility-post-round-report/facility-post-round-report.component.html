@@ -1,0 +1,41 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+  <div class="container">
+      <div class="row mt-1">
+          <div class="col-md-1">
+              <img src="../../../assets/img/logo.png" alt="Dr Desh" class="logo-img">
+          </div>
+          <div class="col-md-10 mt-2">
+              <h3 class="ml-5 card-title">Facility Post Rounding Report</h3>
+              <div class="ml-5" style="font-weight: 700;">From - {{dateFrom | date:'MM-dd-yyyy'}} &nbsp; &nbsp; To - {{dateTo | date:'MM-dd-yyyy'}}</div>
+          </div>
+      </div>
+  </div>
+<table class="table table-bordered mt-1" id="excel-table" *ngIf="reportData.length > 0">
+  <thead>
+      <tr>
+          <th>Facility Name</th>
+          <!-- <th>Facility Email</th> -->
+          <th>Date Of Service</th>
+          <th>View</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let data of reportData | filter:searchTerm | paginate : { itemsPerPage:25, currentPage:pageNo}">
+          <td>{{data.facilityName}}</td>
+          <!-- <td>{{data.facilityEmail}}</td> -->
+          <td>{{data.postRoundData.dateOfService | date:'MM-dd-yyyy'}}</td>
+          <td *ngIf="data.postRoundData.uploadFilePath != undefined">
+            <a download="" target="_blank" href="{{apiUrl}}/ab/{{data.postRoundData.uploadFilePath}}">view</a></td>
+          <td *ngIf="data.postRoundData.uploadFilePath == undefined">not uploaded yet</td>
+      </tr>
+  </tbody>
+  <!-- <pagination-controls (pageChange)="pageNo = $event"></pagination-controls> -->
+</table>
+<div style="color: red;" *ngIf="reportData.length == 0">
+    Data Not Available For This Inputs, Please try with different Inputs.
+</div>
+</div>

@@ -1,0 +1,31 @@
+@import "../../app.component.scss";
+label {
+  font-weight: 700;
+}
+.card-title {
+  font-weight: 600;
+  color: $main-font-color;
+}
+.card {
+  padding: 50px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+tr:nth-child(even) {
+  background-color: rgba(135, 196, 66, 0.5);
+}
+.logo-img {
+  width: 100px;
+}
+.btn-custom {
+  background-color: $main-font-color;
+  color: $main-bg-color;
+}
+.graphBox {
+  background-color: rgba(135, 196, 66, 0.3);
+  padding: 15px;
+}
+.graphHeading {
+  font-weight: 600;
+  color: black;
+}

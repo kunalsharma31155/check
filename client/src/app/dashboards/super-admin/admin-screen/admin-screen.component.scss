@@ -1,0 +1,35 @@
+@import "../../../app.component.scss";
+.col-md-6{
+    padding: 0px 0px;
+}
+.boxa{
+    text-align: center;
+    padding: 25px;
+    background-color: $main-font-color;
+    color: white;
+    height: 100%;
+    border: 1px solid lightgray;
+    border-radius: 5%;
+}
+.boxb{
+    text-align: center;
+    padding: 50px;
+    color: $main-font-color;
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid $main-font-color;
+    border-radius: 10%;
+    outline: none;
+}
+.boxb:hover{
+    background-color:rgba(135, 196, 66, 0.5);
+    color: white;
+    border: 1px solid white;
+}
+.logo-img{
+    width: 80%;
+}
+.logo-text{
+    text-align: left;
+    margin-top: 5%;
+}

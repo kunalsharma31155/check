@@ -1,0 +1,56 @@
+<div class="card">
+  <div>
+    <i class="fa fa-times" aria-hidden="true" (click)="activeModal.dismiss('Cross click')"
+     style="float: right; color: red; padding: 10px 10px 0px 0px; cursor: pointer;"></i>
+  </div>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedProvider == undefined">New Provider</h2>
+    <h2 class="card-title text-center mt-3" *ngIf="selectedProvider != undefined">Update Provider Details</h2>
+    <div class="card-body py-md-4">
+        <form [formGroup]="providerForm" (ngSubmit)="submitForm()">
+            <div class="form-group" >
+                <input type="text" [readonly]="selectedProvider != undefined" class="form-control" formControlName="firstName" [ngClass]="{ 'is-invalid': formSubmitted && f.firstName.errors }" placeholder="First Name">
+                <div *ngIf="formSubmitted && f.firstName.errors" class="invalid-feedback">
+                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text"  class="form-control" formControlName="lastName" [ngClass]="{ 'is-invalid': formSubmitted && f.lastName.errors }" placeholder="Last Name">
+                <div *ngIf="formSubmitted && f.lastName.errors" class="invalid-feedback">
+                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                </div>
+            </div>
+            <label>Provider Type</label>
+            <div class="form-group" *ngFor="let providerType of Types; let i=index" formArrayName="providerTypes">
+                <label>
+                  <input type="checkbox"  formControlName="{{i}}"/>
+                  {{providerType}}
+                </label>
+            </div>
+            <!-- <div  *ngIf="formSubmitted && f.providerTypes.errors?.isChecked" class="form-group invalid-feedback">
+                <div>Select atleast one Type.</div>
+            </div> -->
+            <!-- <div class="form-group" *ngIf="selectedProvider == undefined">
+                <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
+                <div class="invalid-feedback" style="display: block">
+                  <ng-container *ngIf="hasError('image', 'required')">This field is required</ng-container>
+                  <ng-container *ngIf="hasError('image', 'requiredFileType')">Only PNG 🤡</ng-container>
+                </div>
+            </div> -->
+            <div class="form-group" *ngIf="selectedProvider != undefined">
+                <label class="topMargin">Active</label>
+                <div class="onoffswitch">
+                    <input type="checkbox" class="onoffswitch-checkbox form-control1 positionForSwitch" formControlName="activeStatus" id="myonoffswitch" tabindex="0" >
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <button type="submit" *ngIf="selectedProvider == undefined" class="btn btn-custom add">Add Provider</button>
+                <button type="submit" *ngIf="selectedProvider != undefined" class="btn btn-custom add">Update Provider</button>
+                <button type="button" class="btn btn-danger" (click)="activeModal.dismiss('Cross click')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>

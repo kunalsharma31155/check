@@ -1,0 +1,45 @@
+<app-super-admin>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <button type="button" class="btn btn-danger" routerLink="..">
+                    Back
+                </button>&nbsp;
+                <label class="link">{{navLink}}</label>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-10">
+                <input type="text" [(ngModel)]="searchTerm" placeholder="Search" class="mt-2 search">
+            </div>
+            <div class="col-md-2">
+                <!-- <button type="button" class="btn btn-info" (click)="newFacility()">
+                    Add Facility
+                </button> -->
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered mt-2">
+        <thead>
+            <tr>
+                <th>facility Name</th>
+                <th>Address</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Zip code</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let facility of facilitys | filter:searchTerm | paginate : { itemsPerPage:10, currentPage:pageNo}">
+                <td>{{facility?.facilityName}}</td>
+                <td>{{facility?.address?.line1}}</td>
+                <td>{{facility?.address?.state}}</td>
+                <td>{{facility?.address?.city}}</td>
+                <td>{{facility?.address?.zipCode}}</td>
+                <td><i class="fa fa-pencil" aria-hidden="true" (click)="updateFacility(facility)"></i></td>
+            </tr>
+        </tbody>
+        <pagination-controls (pageChange)="pageNo = $event"></pagination-controls>
+    </table>
+</app-super-admin>
