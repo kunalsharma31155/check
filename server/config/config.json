@@ -1,12 +1,14 @@
 {
     "development": {
         "PORT":5000,
+        "PORT_HTTPS":4000,
         "MONGODB_URI": "mongodb+srv://bwb_app_user:Balanced@123@balancedwellbeing.fqn52.mongodb.net/DeshAppFacility?retryWrites=true&w=majority",
         "JWT_PRIVATE_KEY":"emicon_jwtprivatekey",
         "REFRESH_TOKEN":"emicon_refreshtoken"
     },
     "production": {
         "PORT":6000,
+        "PORT_HTTPS":4000,
         "MONGODB_URI": "****",
         "JWT_PRIVATE_KEY":"emicon_jwtprivatekey",
         "REFRESH_TOKEN":"emicon_refreshtoken"
